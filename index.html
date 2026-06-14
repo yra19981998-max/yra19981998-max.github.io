@@ -26,15 +26,12 @@ h2::after{content:'';display:block;width:40px;height:2px;background:#e0a458;marg
 .masonry{columns:3;column-gap:16px}
 .masonry .item{break-inside:avoid;margin-bottom:16px;background:#12121a;border-radius:8px;overflow:hidden;border:1px solid #1e1e2e;transition:transform .3s,border-color .3s,box-shadow .3s}
 .masonry .item:hover{transform:scale(1.02);border-color:#e0a458;box-shadow:0 10px 30px rgba(224,164,88,.2)}
-.masonry .item .video-wrap{position:relative;width:100%}
-.masonry .item:nth-child(odd) .video-wrap{height:200px}
-.masonry .item:nth-child(even) .video-wrap{height:280px}
-.masonry .item:nth-child(3n) .video-wrap{height:340px}
-.masonry .item:nth-child(5n+1) .video-wrap{height:240px}
-.masonry .item iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:none;clip-path:inset(0 0 0 0)}
+.masonry .item video,.masonry .item iframe{width:100%;display:block;border:none}
+.masonry .item:nth-child(odd) video,.masonry .item:nth-child(odd) iframe{height:200px}
+.masonry .item:nth-child(even) video,.masonry .item:nth-child(even) iframe{height:280px}
+.masonry .item:nth-child(3n) video,.masonry .item:nth-child(3n) iframe{height:340px}
+.masonry .item:nth-child(5n+1) video,.masonry .item:nth-child(5n+1) iframe{height:240px}
 .masonry .item .title{padding:10px;font-size:.85em;color:#aaa}
-/* Скрываем лого YouTube/OK — чёрная полоска поверх */
-.video-wrap::after{content:'';position:absolute;bottom:0;left:0;width:100%;height:30px;background:#12121a;z-index:2;pointer-events:none}
 @media(max-width:768px){.masonry{columns:2}}
 .services-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:16px}
 .service-card{background:#12121a;padding:25px;border-radius:8px;border:1px solid #1e1e2e;transition:transform .3s}
@@ -115,19 +112,20 @@ particles.forEach((a,i)=>{particles.slice(i+1).forEach(b=>{const d=Math.hypot(a.
 requestAnimationFrame(drawBg)
 }
 drawBg()
-const videos=['9-QWem37oQ8','876hNQ62_dU','KXeYe4MZSx0','lbhyxBpc6CY','qpg3Lcq1iOU','EyUcxrPcS6c','ZqYO02nAi1E','zp3tQoAy_3U','SPycRDRG6x0','LOvaWDpWiGE','Fsqx_qNLc3w','G-ZumvWh_Oc','GRG3oWatdeo','9K35moNFEug','_QiQzDj8CPg','Qfsgk1wH_jA','EExeZeWYqZE','uqFueQnfbmg']
 const masonry=document.getElementById('masonry')
-// OK.ru видео 8
+// 18 видео с OK.ru (работа 8)
 const okItem=document.createElement('div')
 okItem.className='item'
-okItem.innerHTML=`<div class="video-wrap"><iframe src="https://ok.ru/videoembed/15482538691223" allowfullscreen></iframe></div><div class="title">Работа 8</div>`
+okItem.innerHTML=`<iframe src="https://ok.ru/videoembed/15482538691223" allowfullscreen></iframe><div class="title">Работа 8</div>`
 masonry.appendChild(okItem)
-videos.forEach((id,i)=>{
+// Остальные 17 из папки videos/
+for(let i=1;i<=17;i++){
+if(i===8)continue // 8-е уже из OK
 const item=document.createElement('div')
 item.className='item'
-item.innerHTML=`<div class="video-wrap"><iframe src="https://www.youtube.com/embed/${id}?controls=0&modestbranding=1&rel=0" allowfullscreen loading="lazy"></iframe></div><div class="title">Работа ${i<=7?i+1:i+2}</div>`
+item.innerHTML=`<video src="videos/${i}.mp4" controls preload="metadata"></video><div class="title">Работа ${i}</div>`
 masonry.appendChild(item)
-})
+}
 const observer=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')})},{threshold:.15})
 document.querySelectorAll('section').forEach(s=>observer.observe(s))
 window.addEventListener('scroll',()=>{document.querySelector('.back-top').classList.toggle('show',window.scrollY>500)})

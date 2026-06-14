@@ -26,11 +26,11 @@ h2::after{content:'';display:block;width:40px;height:2px;background:#e0a458;marg
 .masonry{columns:3;column-gap:16px}
 .masonry .item{break-inside:avoid;margin-bottom:16px;background:#12121a;border-radius:8px;overflow:hidden;border:1px solid #1e1e2e;transition:transform .3s,border-color .3s,box-shadow .3s}
 .masonry .item:hover{transform:scale(1.02);border-color:#e0a458;box-shadow:0 10px 30px rgba(224,164,88,.2)}
-.masonry .item iframe,.masonry .item video{width:100%;display:block;border:none}
-.masonry .item:nth-child(odd) iframe,.masonry .item:nth-child(odd) video{height:200px}
-.masonry .item:nth-child(even) iframe,.masonry .item:nth-child(even) video{height:280px}
-.masonry .item:nth-child(3n) iframe,.masonry .item:nth-child(3n) video{height:340px}
-.masonry .item:nth-child(5n+1) iframe,.masonry .item:nth-child(5n+1) video{height:240px}
+.masonry .item iframe{width:100%;display:block;border:none}
+.masonry .item:nth-child(odd) iframe{height:200px}
+.masonry .item:nth-child(even) iframe{height:280px}
+.masonry .item:nth-child(3n) iframe{height:340px}
+.masonry .item:nth-child(5n+1) iframe{height:240px}
 .masonry .item .title{padding:10px;font-size:.85em;color:#aaa}
 @media(max-width:768px){.masonry{columns:2}}
 .services-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:16px}
@@ -114,12 +114,11 @@ requestAnimationFrame(drawBg)
 drawBg()
 const videos=['9-QWem37oQ8','876hNQ62_dU','KXeYe4MZSx0','lbhyxBpc6CY','qpg3Lcq1iOU','EyUcxrPcS6c','ZqYO02nAi1E','zp3tQoAy_3U','SPycRDRG6x0','LOvaWDpWiGE','Fsqx_qNLc3w','G-ZumvWh_Oc','GRG3oWatdeo','9K35moNFEug','_QiQzDj8CPg','Qfsgk1wH_jA','EExeZeWYqZE','uqFueQnfbmg']
 const masonry=document.getElementById('masonry')
-// Видео с Google Диска
-const localItem=document.createElement('div')
-localItem.className='item'
-localItem.innerHTML=`<video src="https://drive.google.com/uc?export=download&id=1KzqIKPfV6IF_ZZRyBQRNoESqMhkzljb_" controls preload="metadata"></video><div class="title">Работа 8</div>`
-masonry.appendChild(localItem)
-// YouTube видео
+// Видео 8 из OK.ru
+const okItem=document.createElement('div')
+okItem.className='item'
+okItem.innerHTML=`<iframe src="https://ok.ru/videoembed/15482538691223" allowfullscreen></iframe><div class="title">Работа 8</div>`
+masonry.appendChild(okItem)
 videos.forEach((id,i)=>{
 const item=document.createElement('div')
 item.className='item'

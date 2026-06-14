@@ -29,7 +29,6 @@ h2::after{content:'';display:block;width:40px;height:2px;background:#e0a458;marg
 .about ul li{padding:5px 0;color:#bbb}
 .about ul li::before{content:'✅ ';color:#e0a458}
 
-/* Мозаика */
 .masonry{columns:3;column-gap:16px}
 .masonry .item{break-inside:avoid;margin-bottom:16px;background:#12121a;border-radius:8px;overflow:hidden;border:1px solid #1e1e2e;transition:transform .3s,border-color .3s,box-shadow .3s}
 .masonry .item:hover{transform:scale(1.02);border-color:#e0a458;box-shadow:0 10px 30px rgba(224,164,88,.2)}
@@ -123,7 +122,7 @@ requestAnimationFrame(drawBg)
 }
 drawBg()
 
-// Мозаика
+// Мозаика — ID видео (Shorts работают через /embed/ так же)
 const videos=[
 '9-QWem37oQ8','876hNQ62_dU','KXeYe4MZSx0','lbhyxBpc6CY','qpg3Lcq1iOU',
 'EyUcxrPcS6c','ZqYO02nAi1E','-42RcRx5y0o','zp3tQoAy_3U','SPycRDRG6x0',

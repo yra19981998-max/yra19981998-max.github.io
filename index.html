@@ -28,14 +28,48 @@ h2::after{content:'';display:block;width:40px;height:2px;background:#e0a458;marg
 .about ul{list-style:none;margin-top:15px}
 .about ul li{padding:5px 0;color:#bbb}
 .about ul li::before{content:'✅ ';color:#e0a458}
-.filter{margin-bottom:20px;display:flex;gap:10px;flex-wrap:wrap}
-.filter button{background:#1a1a2e;color:#ccc;border:1px solid #333;padding:8px 16px;border-radius:20px;cursor:pointer;transition:all .3s}
-.filter button:hover,.filter button.active{background:#e0a458;color:#0a0a0f;border-color:#e0a458}
-.portfolio-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px}
-.video-card{background:#12121a;border-radius:8px;overflow:hidden;transition:transform .3s,box-shadow .3s;border:1px solid #1e1e2e}
-.video-card:hover{transform:translateY(-5px);box-shadow:0 10px 30px rgba(0,0,0,.5);border-color:#e0a458}
-.video-card iframe{width:100%;height:180px;display:block;border:none}
-.video-card .title{padding:10px;font-size:.85em}
+
+/* Карусель */
+.carousel{position:relative;height:420px;overflow:hidden;margin:20px 0}
+.carousel-track{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:100%;height:100%}
+.card{
+  position:absolute;
+  width:240px;height:170px;
+  background:#12121a;
+  border-radius:8px;overflow:hidden;
+  border:1px solid #1e1e2e;
+  transition:all .5s cubic-bezier(.4,0,.2,1);
+  cursor:pointer;
+  left:50%;top:50%;
+  transform:translate(-50%,-50%) scale(.85);
+  opacity:.5;filter:brightness(.5);
+}
+.card.active{
+  transform:translate(-50%,-50%) scale(1.1);
+  opacity:1;filter:brightness(1);
+  z-index:10;
+  border-color:#e0a458;
+  box-shadow:0 10px 40px rgba(224,164,88,.3);
+}
+.card iframe{width:100%;height:100%;display:block;border:none;pointer-events:none}
+.card.active iframe{pointer-events:auto}
+.carousel-btn{
+  position:absolute;top:50%;transform:translateY(-50%);
+  background:rgba(18,18,26,.8);color:#e0a458;
+  border:1px solid #e0a458;font-size:1.5em;
+  width:40px;height:40px;border-radius:50%;
+  cursor:pointer;z-index:20;transition:background .3s;
+}
+.carousel-btn:hover{background:#e0a458;color:#0a0a0f}
+.carousel-btn.prev{left:0}
+.carousel-btn.next{right:0}
+.carousel-dots{text-align:center;margin-top:10px}
+.carousel-dots button{
+  width:8px;height:8px;border-radius:50%;border:none;
+  background:#333;margin:0 4px;cursor:pointer;transition:background .3s;
+}
+.carousel-dots button.active{background:#e0a458}
+
 .services-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:16px}
 .service-card{background:#12121a;padding:25px;border-radius:8px;border:1px solid #1e1e2e;transition:transform .3s}
 .service-card:hover{transform:translateY(-5px);border-color:#e0a458}
@@ -47,7 +81,6 @@ h2::after{content:'';display:block;width:40px;height:2px;background:#e0a458;marg
 .back-top{position:fixed;bottom:30px;right:30px;background:#e0a458;color:#0a0a0f;border:none;width:45px;height:45px;border-radius:50%;cursor:pointer;font-size:1.5em;opacity:0;transition:opacity .3s;z-index:99}
 .back-top.show{opacity:1}
 footer{text-align:center;padding:25px;color:#555}
-/* Таймлайн снизу */
 .timeline{position:fixed;bottom:0;left:0;width:100%;height:3px;z-index:2;pointer-events:none}
 .timeline div{height:100%;float:left}
 .tl1{width:25%;background:#4a90d9}
@@ -83,32 +116,12 @@ footer{text-align:center;padding:25px;color:#555}
 </section>
 <section id="portfolio">
 <h2>Портфолио</h2>
-<div class="filter">
-<button class="active" onclick="filter('all')">Все</button>
-<button onclick="filter('shorts')">Shorts</button>
-<button onclick="filter('video')">Видео</button>
+<div class="carousel">
+<button class="carousel-btn prev" onclick="move(-1)">◂</button>
+<button class="carousel-btn next" onclick="move(1)">▸</button>
+<div class="carousel-track" id="track"></div>
 </div>
-<div class="portfolio-grid">
-<div class="video-card" data-cat="video"><iframe src="https://www.youtube.com/embed/9-QWem37oQ8" allowfullscreen></iframe><div class="title">Работа 1</div></div>
-<div class="video-card" data-cat="video"><iframe src="https://www.youtube.com/embed/876hNQ62_dU" allowfullscreen></iframe><div class="title">Работа 2</div></div>
-<div class="video-card" data-cat="video"><iframe src="https://www.youtube.com/embed/KXeYe4MZSx0" allowfullscreen></iframe><div class="title">Работа 3</div></div>
-<div class="video-card" data-cat="video"><iframe src="https://www.youtube.com/embed/lbhyxBpc6CY" allowfullscreen></iframe><div class="title">Работа 4</div></div>
-<div class="video-card" data-cat="video"><iframe src="https://www.youtube.com/embed/qpg3Lcq1iOU" allowfullscreen></iframe><div class="title">Работа 5</div></div>
-<div class="video-card" data-cat="video"><iframe src="https://www.youtube.com/embed/EyUcxrPcS6c" allowfullscreen></iframe><div class="title">Работа 6</div></div>
-<div class="video-card" data-cat="video"><iframe src="https://www.youtube.com/embed/ZqYO02nAi1E" allowfullscreen></iframe><div class="title">Работа 7</div></div>
-<div class="video-card" data-cat="shorts"><iframe src="https://www.youtube.com/embed/-42RcRx5y0o" allowfullscreen></iframe><div class="title">Работа 8</div></div>
-<div class="video-card" data-cat="video"><iframe src="https://www.youtube.com/embed/zp3tQoAy_3U" allowfullscreen></iframe><div class="title">Работа 9</div></div>
-<div class="video-card" data-cat="shorts"><iframe src="https://www.youtube.com/embed/SPycRDRG6x0" allowfullscreen></iframe><div class="title">Работа 10</div></div>
-<div class="video-card" data-cat="shorts"><iframe src="https://www.youtube.com/embed/LOvaWDpWiGE" allowfullscreen></iframe><div class="title">Работа 11</div></div>
-<div class="video-card" data-cat="shorts"><iframe src="https://www.youtube.com/embed/Fsqx_qNLc3w" allowfullscreen></iframe><div class="title">Работа 12</div></div>
-<div class="video-card" data-cat="shorts"><iframe src="https://www.youtube.com/embed/G-ZumvWh_Oc" allowfullscreen></iframe><div class="title">Работа 13</div></div>
-<div class="video-card" data-cat="shorts"><iframe src="https://www.youtube.com/embed/GRG3oWatdeo" allowfullscreen></iframe><div class="title">Работа 14</div></div>
-<div class="video-card" data-cat="shorts"><iframe src="https://www.youtube.com/embed/9K35moNFEug" allowfullscreen></iframe><div class="title">Работа 15</div></div>
-<div class="video-card" data-cat="shorts"><iframe src="https://www.youtube.com/embed/_QiQzDj8CPg" allowfullscreen></iframe><div class="title">Работа 16</div></div>
-<div class="video-card" data-cat="shorts"><iframe src="https://www.youtube.com/embed/Qfsgk1wH_jA" allowfullscreen></iframe><div class="title">Работа 17</div></div>
-<div class="video-card" data-cat="shorts"><iframe src="https://www.youtube.com/embed/EExeZeWYqZE" allowfullscreen></iframe><div class="title">Работа 18</div></div>
-<div class="video-card" data-cat="shorts"><iframe src="https://www.youtube.com/embed/uqFueQnfbmg" allowfullscreen></iframe><div class="title">Работа 19</div></div>
-</div>
+<div class="carousel-dots" id="dots"></div>
 </section>
 <section id="services">
 <h2>Услуги и цены</h2>
@@ -126,63 +139,64 @@ footer{text-align:center;padding:25px;color:#555}
 <button class="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
 <footer>© 2026 Mukhin Yuri</footer>
 <script>
-// Анимированный фон с частицами
+// Фон
 const canvas=document.getElementById('bg'),ctx=canvas.getContext('2d')
 let w,h,particles=[]
 function resize(){w=canvas.width=window.innerWidth;h=canvas.height=window.innerHeight}
 resize();window.addEventListener('resize',resize)
-for(let i=0;i<80;i++){
-particles.push({
-x:Math.random()*w,y:Math.random()*h,
-vx:(Math.random()-.5)*.5,vy:(Math.random()-.5)*.5,
-r:Math.random()*2+1,
-a:Math.random()*.5+.1
-})
-}
-function draw(){
+for(let i=0;i<80;i++)particles.push({x:Math.random()*w,y:Math.random()*h,vx:(Math.random()-.5)*.5,vy:(Math.random()-.5)*.5,r:Math.random()*2+1,a:Math.random()*.5+.1})
+function drawBg(){
 ctx.clearRect(0,0,w,h)
-// Сетка
 ctx.strokeStyle='rgba(255,255,255,.03)';ctx.lineWidth=1
 for(let x=0;x<w;x+=60){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,h);ctx.stroke()}
 for(let y=0;y<h;y+=60){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(w,y);ctx.stroke()}
-// Частицы
-particles.forEach(p=>{
-p.x+=p.vx;p.y+=p.vy
-if(p.x<0||p.x>w)p.vx*=-1
-if(p.y<0||p.y>h)p.vy*=-1
-ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2)
-ctx.fillStyle=`rgba(224,164,88,${p.a})`;ctx.fill()
-})
-// Соединения
-particles.forEach((a,i)=>{
-particles.slice(i+1).forEach(b=>{
-const d=Math.hypot(a.x-b.x,a.y-b.y)
-if(d<120){ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.strokeStyle=`rgba(224,164,88,${.06*(1-d/120)})`;ctx.stroke()}
-})
-})
-requestAnimationFrame(draw)
+particles.forEach(p=>{p.x+=p.vx;p.y+=p.vy;if(p.x<0||p.x>w)p.vx*=-1;if(p.y<0||p.y>h)p.vy*=-1;ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fillStyle=`rgba(224,164,88,${p.a})`;ctx.fill()})
+particles.forEach((a,i)=>{particles.slice(i+1).forEach(b=>{const d=Math.hypot(a.x-b.x,a.y-b.y);if(d<120){ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.strokeStyle=`rgba(224,164,88,${.06*(1-d/120)})`;ctx.stroke()}})})
+requestAnimationFrame(drawBg)
 }
-draw()
+drawBg()
 
-// Появление секций
-const observer=new IntersectionObserver((entries)=>{
-entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')})
-},{threshold:.15})
+// Видео
+const videos=[
+'9-QWem37oQ8','876hNQ62_dU','KXeYe4MZSx0','lbhyxBpc6CY','qpg3Lcq1iOU',
+'EyUcxrPcS6c','ZqYO02nAi1E','-42RcRx5y0o','zp3tQoAy_3U','SPycRDRG6x0',
+'LOvaWDpWiGE','Fsqx_qNLc3w','G-ZumvWh_Oc','GRG3oWatdeo','9K35moNFEug',
+'_QiQzDj8CPg','Qfsgk1wH_jA','EExeZeWYqZE','uqFueQnfbmg'
+]
+const track=document.getElementById('track'),dots=document.getElementById('dots')
+let current=0
+function render(){
+track.innerHTML='';dots.innerHTML=''
+videos.forEach((id,i)=>{
+const card=document.createElement('div')
+card.className='card'+(i===current?' active':'')
+card.innerHTML=`<iframe src="https://www.youtube.com/embed/${id}" allowfullscreen></iframe>`
+card.onclick=()=>{current=i;render()}
+track.appendChild(card)
+const dot=document.createElement('button')
+dot.className=i===current?'active':''
+dot.onclick=()=>{current=i;render()}
+dots.appendChild(dot)
+})
+positionCards()
+}
+function positionCards(){
+const cards=track.querySelectorAll('.card'),total=cards.length
+cards.forEach((c,i)=>{
+let offset=i-current
+if(offset>2&&offset<total-2)offset=offset>0?3:-3
+const x=offset*200,y=Math.abs(offset)*12
+c.style.transform=`translate(calc(-50% + ${x}px), calc(-50% + ${y}px)) scale(${i===current?1.1:.85})`
+c.style.zIndex=total-Math.abs(offset)
+})
+}
+function move(dir){current=(current+dir+videos.length)%videos.length;render()}
+render()
+
+// Секции
+const observer=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')})},{threshold:.15})
 document.querySelectorAll('section').forEach(s=>observer.observe(s))
-
-// Кнопка наверх
-window.addEventListener('scroll',()=>{
-document.querySelector('.back-top').classList.toggle('show',window.scrollY>500)
-})
-
-// Фильтр
-function filter(cat){
-document.querySelectorAll('.filter button').forEach(b=>b.classList.remove('active'))
-event.target.classList.add('active')
-document.querySelectorAll('.video-card').forEach(card=>{
-card.style.display=(cat==='all'||card.dataset.cat===cat)?'block':'none'
-})
-}
+window.addEventListener('scroll',()=>{document.querySelector('.back-top').classList.toggle('show',window.scrollY>500)})
 </script>
 </body>
 </html>

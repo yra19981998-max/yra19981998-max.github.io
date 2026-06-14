@@ -34,13 +34,10 @@ h2::after{content:'';display:block;width:40px;height:2px;background:#e0a458;marg
 .feature .label{font-size:.8em;color:#aaa}
 @media(max-width:768px){.about-hero{grid-template-columns:1fr}.about-stats{grid-template-columns:repeat(3,1fr)}.about-features{grid-template-columns:repeat(2,1fr)}}
 .video-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
-.video-item{background:#12121a;border-radius:8px;overflow:hidden;border:1px solid #1e1e2e;transition:transform .3s;position:relative;cursor:pointer;height:260px}
+.video-item{background:#12121a;border-radius:8px;overflow:hidden;border:1px solid #1e1e2e;transition:transform .3s}
 .video-item:hover{transform:translateY(-3px);border-color:#e0a458}
-.video-item video{width:100%;display:none;background:#000;position:absolute;top:0;left:0;height:100%}
-.video-item .play-btn{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:60px;height:60px;border:2px solid #e0a458;border-radius:50%;background:rgba(0,0,0,.5);z-index:2}
-.video-item .play-btn::after{content:'';display:block;width:0;height:0;border-left:20px solid #e0a458;border-top:12px solid transparent;border-bottom:12px solid transparent;margin:18px 0 0 22px}
-.video-item .num{position:absolute;top:50%;left:50%;transform:translate(-50%,-80px);color:#e0a458;font-size:1em;z-index:2}
-.video-item .label{position:absolute;bottom:0;left:0;right:0;padding:10px 12px;font-size:.85em;color:#aaa}
+.video-item video{width:100%;display:block;background:#000}
+.video-item .label{padding:10px 12px;font-size:.85em;color:#aaa}
 @media(max-width:768px){.video-grid{grid-template-columns:1fr}}
 .services-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:16px}
 .service-card{background:#12121a;padding:25px;border-radius:8px;border:1px solid #1e1e2e;transition:transform .3s}
@@ -142,36 +139,13 @@ draw()
 const grid=document.getElementById('grid')
 const okItem=document.createElement('div')
 okItem.className='video-item'
-okItem.innerHTML=`<iframe src="https://ok.ru/videoembed/15482538691223" allowfullscreen style="width:100%;height:100%;border:none;position:absolute;top:0;left:0"></iframe><div class="label">Работа 8</div>`
+okItem.innerHTML=`<iframe src="https://ok.ru/videoembed/15482538691223" allowfullscreen style="width:100%;height:260px;border:none"></iframe><div class="label">Работа 8</div>`
 grid.appendChild(okItem)
 for(let i=1;i<=18;i++){
 if(i===8)continue
 const item=document.createElement('div')
 item.className='video-item'
-const num=document.createElement('div')
-num.className='num'
-num.textContent=i
-const btn=document.createElement('div')
-btn.className='play-btn'
-const video=document.createElement('video')
-video.src=`videos/${i}.mp4`
-video.controls=true
-video.preload='none'
-video.playsInline=true
-video.style.cssText='position:absolute;top:0;left:0;width:100%;height:100%'
-const label=document.createElement('div')
-label.className='label'
-label.textContent=`Работа ${i}`
-item.appendChild(num)
-item.appendChild(btn)
-item.appendChild(video)
-item.appendChild(label)
-item.addEventListener('click',function(){
-video.style.display='block'
-video.play()
-num.style.display='none'
-btn.style.display='none'
-})
+item.innerHTML=`<video src="videos/${i}.mp4" controls preload="metadata" playsinline></video><div class="label">Работа ${i}</div>`
 grid.appendChild(item)
 }
 window.addEventListener('scroll',()=>{document.querySelector('.back-top').classList.toggle('show',window.scrollY>500)})

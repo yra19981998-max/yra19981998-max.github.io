@@ -13,7 +13,7 @@ body{
   overflow-x:hidden;
 }
 canvas#bg{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0}
-.container{max-width:900px;margin:0 auto;padding:40px 20px;position:relative;z-index:1}
+.container{max-width:1000px;margin:0 auto;padding:40px 20px;position:relative;z-index:1}
 a{color:#e0a458;text-decoration:none}
 header{text-align:center;padding:60px 20px 30px}
 header h1{font-size:2.8em;color:#fff}
@@ -29,15 +29,18 @@ h2::after{content:'';display:block;width:40px;height:2px;background:#e0a458;marg
 .about ul li{padding:5px 0;color:#bbb}
 .about ul li::before{content:'✅ ';color:#e0a458}
 
-/* Горизонтальная лента */
-.tape-wrapper{overflow-x:auto;overflow-y:hidden;cursor:grab;scroll-behavior:smooth;-webkit-overflow-scrolling:touch;padding:10px 0}
-.tape-wrapper::-webkit-scrollbar{height:6px}
-.tape-wrapper::-webkit-scrollbar-track{background:#12121a;border-radius:3px}
-.tape-wrapper::-webkit-scrollbar-thumb{background:#e0a458;border-radius:3px}
-.tape{display:flex;gap:16px;padding:0 20px}
-.tape-card{min-width:280px;height:190px;background:#12121a;border-radius:8px;overflow:hidden;border:1px solid #1e1e2e;transition:transform .3s,border-color .3s,box-shadow .3s;flex-shrink:0}
-.tape-card:hover{transform:translateY(-5px);border-color:#e0a458;box-shadow:0 10px 30px rgba(224,164,88,.2)}
-.tape-card iframe{width:100%;height:100%;display:block;border:none}
+/* Мозаика */
+.masonry{columns:3;column-gap:16px}
+.masonry .item{break-inside:avoid;margin-bottom:16px;background:#12121a;border-radius:8px;overflow:hidden;border:1px solid #1e1e2e;transition:transform .3s,border-color .3s,box-shadow .3s}
+.masonry .item:hover{transform:scale(1.02);border-color:#e0a458;box-shadow:0 10px 30px rgba(224,164,88,.2)}
+.masonry .item iframe{width:100%;display:block;border:none}
+.masonry .item:nth-child(odd) iframe{height:200px}
+.masonry .item:nth-child(even) iframe{height:280px}
+.masonry .item:nth-child(3n) iframe{height:340px}
+.masonry .item:nth-child(5n+1) iframe{height:240px}
+.masonry .item .title{padding:10px;font-size:.85em;color:#aaa}
+
+@media(max-width:768px){.masonry{columns:2}}
 
 .services-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:16px}
 .service-card{background:#12121a;padding:25px;border-radius:8px;border:1px solid #1e1e2e;transition:transform .3s}
@@ -85,9 +88,7 @@ footer{text-align:center;padding:25px;color:#555}
 </section>
 <section id="portfolio">
 <h2>Портфолио</h2>
-<div class="tape-wrapper" id="tapeWrap">
-<div class="tape" id="tape"></div>
-</div>
+<div class="masonry" id="masonry"></div>
 </section>
 <section id="services">
 <h2>Услуги и цены</h2>
@@ -122,28 +123,20 @@ requestAnimationFrame(drawBg)
 }
 drawBg()
 
-// Лента с видео
+// Мозаика
 const videos=[
 '9-QWem37oQ8','876hNQ62_dU','KXeYe4MZSx0','lbhyxBpc6CY','qpg3Lcq1iOU',
 'EyUcxrPcS6c','ZqYO02nAi1E','-42RcRx5y0o','zp3tQoAy_3U','SPycRDRG6x0',
 'LOvaWDpWiGE','Fsqx_qNLc3w','G-ZumvWh_Oc','GRG3oWatdeo','9K35moNFEug',
 '_QiQzDj8CPg','Qfsgk1wH_jA','EExeZeWYqZE','uqFueQnfbmg'
 ]
-const tape=document.getElementById('tape')
-videos.forEach(id=>{
-const card=document.createElement('div')
-card.className='tape-card'
-card.innerHTML=`<iframe src="https://www.youtube.com/embed/${id}" allowfullscreen loading="lazy"></iframe>`
-tape.appendChild(card)
+const masonry=document.getElementById('masonry')
+videos.forEach((id,i)=>{
+const item=document.createElement('div')
+item.className='item'
+item.innerHTML=`<iframe src="https://www.youtube.com/embed/${id}" allowfullscreen loading="lazy"></iframe><div class="title">Работа ${i+1}</div>`
+masonry.appendChild(item)
 })
-
-// Drag to scroll
-const wrap=document.getElementById('tapeWrap')
-let isDown=false,startX,scrollLeft
-wrap.addEventListener('mousedown',e=>{isDown=true;wrap.style.cursor='grabbing';startX=e.pageX-wrap.offsetLeft;scrollLeft=wrap.scrollLeft})
-wrap.addEventListener('mouseleave',()=>{isDown=false;wrap.style.cursor='grab'})
-wrap.addEventListener('mouseup',()=>{isDown=false;wrap.style.cursor='grab'})
-wrap.addEventListener('mousemove',e=>{if(!isDown)return;e.preventDefault();const x=e.pageX-wrap.offsetLeft;wrap.scrollLeft=scrollLeft-(x-startX)*2})
 
 // Секции
 const observer=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')})},{threshold:.15})

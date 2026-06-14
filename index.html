@@ -13,22 +13,37 @@ a{color:#e0a458;text-decoration:none}
 header{text-align:center;padding:60px 20px 30px}
 header h1{font-size:2.8em;color:#fff}
 nav{margin-top:25px}
-nav a{margin:0 12px;text-transform:uppercase}
+nav a{margin:0 12px;text-transform:uppercase;transition:color .3s}
+nav a:hover{color:#fff}
 section{padding:50px 20px}
 h2{font-size:1.8em;color:#fff}
 h2::after{content:'';display:block;width:40px;height:2px;background:#e0a458;margin-top:8px}
-.about p{line-height:1.7;color:#aaa}
-.about ul{list-style:none;margin-top:15px}
-.about ul li{padding:5px 0;color:#bbb}
-.about ul li::before{content:'✅ ';color:#e0a458}
+
+/* Обо мне */
+.about-hero{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start}
+.about-hero .text p{line-height:1.7;color:#aaa;margin-bottom:20px;font-size:1.05em}
+.about-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.stat-card{background:#12121a;border:1px solid #1e1e2e;border-radius:8px;padding:20px;text-align:center;transition:border-color .3s}
+.stat-card:hover{border-color:#e0a458}
+.stat-card .num{font-size:2em;color:#e0a458;font-weight:bold}
+.stat-card .txt{font-size:.85em;color:#888;margin-top:4px}
+.software{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
+.software span{background:#1a1a2e;border:1px solid #333;padding:6px 14px;border-radius:20px;font-size:.85em;color:#e0a458}
+.about-features{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:30px}
+.feature{background:#12121a;border:1px solid #1e1e2e;border-radius:8px;padding:16px;text-align:center;transition:border-color .3s}
+.feature:hover{border-color:#e0a458}
+.feature .icon{font-size:1.8em;margin-bottom:6px}
+.feature .label{font-size:.8em;color:#aaa}
+@media(max-width:768px){.about-hero{grid-template-columns:1fr}.about-stats{grid-template-columns:repeat(3,1fr)}.about-features{grid-template-columns:repeat(2,1fr)}}
+
 .video-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
-.video-item{background:#12121a;border-radius:8px;overflow:hidden;border:1px solid #1e1e2e;transition:transform .3s;position:relative;cursor:pointer}
+.video-item{background:#12121a;border-radius:8px;overflow:hidden;border:1px solid #1e1e2e;transition:transform .3s;position:relative;cursor:pointer;height:260px}
 .video-item:hover{transform:translateY(-3px);border-color:#e0a458}
-.video-item video{width:100%;display:none;background:#000}
+.video-item video{width:100%;display:none;background:#000;position:absolute;top:0;left:0;height:100%}
 .video-item .play-btn{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:60px;height:60px;border:2px solid #e0a458;border-radius:50%;background:rgba(0,0,0,.5);z-index:2}
 .video-item .play-btn::after{content:'';display:block;width:0;height:0;border-left:20px solid #e0a458;border-top:12px solid transparent;border-bottom:12px solid transparent;margin:18px 0 0 22px}
 .video-item .num{position:absolute;top:50%;left:50%;transform:translate(-50%,-80px);color:#e0a458;font-size:1em;z-index:2}
-.video-item .label{padding:10px 12px;font-size:.85em;color:#aaa}
+.video-item .label{position:absolute;bottom:0;left:0;right:0;padding:10px 12px;font-size:.85em;color:#aaa}
 @media(max-width:768px){.video-grid{grid-template-columns:1fr}}
 .services-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:16px}
 .service-card{background:#12121a;padding:25px;border-radius:8px;border:1px solid #1e1e2e;transition:transform .3s}
@@ -64,15 +79,33 @@ footer{text-align:center;padding:25px;color:#555}
 <a href="#contacts">Контакты</a>
 </nav>
 </header>
-<section id="about" class="about">
+<section id="about">
 <h2>Обо мне</h2>
-<p>Привет! Я Yuri — видеомонтажёр. Превращаю ваш материал в готовый ролик для YouTube, Instagram и Reels.</p>
-<ul>
-<li>Чистый звук и цветокоррекция</li>
-<li>Динамичный или спокойный монтаж</li>
-<li>Субтитры, графика, переходы</li>
-<li>Готовый ролик в нужном формате</li>
-</ul>
+<div class="about-hero">
+<div class="text">
+<p>Создаю ролики, которые цепляют с первой секунды и не отпускают до финального кадра.</p>
+<p>Мой инструмент — <strong style="color:#e0a458">DaVinci Resolve</strong>. В кадре всё имеет значение: ритм, цвет, звук. Я не просто склеиваю видео, а делаю продукт, который решает вашу задачу: продаёт, обучает или развлекает.</p>
+<p>Работал с бизнесом и музыкальными проектами. Делал Reels, которые набирали 100 000+ просмотров, и коммерческие ролики, которые приносили клиентов.</p>
+<div class="software">
+<span>DaVinci Resolve</span>
+<span>Цветокоррекция</span>
+<span>Саунд-дизайн</span>
+<span>Reels</span>
+<span>YouTube</span>
+</div>
+</div>
+<div class="about-stats">
+<div class="stat-card"><div class="num">50+</div><div class="txt">проектов</div></div>
+<div class="stat-card"><div class="num">2 года</div><div class="txt">опыта</div></div>
+<div class="stat-card"><div class="num">100%</div><div class="txt">довольных</div></div>
+</div>
+</div>
+<div class="about-features">
+<div class="feature"><div class="icon">🎬</div><div class="label">Динамичный монтаж</div></div>
+<div class="feature"><div class="icon">🎨</div><div class="label">Цветокоррекция</div></div>
+<div class="feature"><div class="icon">🔊</div><div class="label">Чистый звук</div></div>
+<div class="feature"><div class="icon">📱</div><div class="label">Все форматы</div></div>
+</div>
 </section>
 <section id="portfolio">
 <h2>Портфолио</h2>
@@ -110,18 +143,14 @@ requestAnimationFrame(draw)
 }
 draw()
 const grid=document.getElementById('grid')
-// OK.ru
 const okItem=document.createElement('div')
 okItem.className='video-item'
-okItem.style.cssText='height:260px;background:#000'
-okItem.innerHTML=`<iframe src="https://ok.ru/videoembed/15482538691223" allowfullscreen style="width:100%;height:100%;border:none;position:absolute;top:0;left:0"></iframe><div class="label" style="position:absolute;bottom:0;left:0;right:0">Работа 8</div>`
+okItem.innerHTML=`<iframe src="https://ok.ru/videoembed/15482538691223" allowfullscreen style="width:100%;height:100%;border:none;position:absolute;top:0;left:0"></iframe><div class="label">Работа 8</div>`
 grid.appendChild(okItem)
-// Локальные видео с кнопкой Play
 for(let i=1;i<=18;i++){
 if(i===8)continue
 const item=document.createElement('div')
 item.className='video-item'
-item.style.cssText='height:260px;background:#000'
 const num=document.createElement('div')
 num.className='num'
 num.textContent=i
@@ -135,7 +164,6 @@ video.playsInline=true
 video.style.cssText='position:absolute;top:0;left:0;width:100%;height:100%'
 const label=document.createElement('div')
 label.className='label'
-label.style.cssText='position:absolute;bottom:0;left:0;right:0'
 label.textContent=`Работа ${i}`
 item.appendChild(num)
 item.appendChild(btn)

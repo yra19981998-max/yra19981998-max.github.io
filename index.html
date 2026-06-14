@@ -6,8 +6,7 @@
 <title>Mukhin Yuri — Видеомонтаж</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;scroll-behavior:smooth}
-body{background:#0a0a0f;color:#ccc;font-family:system-ui,sans-serif;overflow-x:hidden}
-canvas#bg{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0}
+body{background:#0a0a0f;color:#ccc;font-family:system-ui,sans-serif}
 .container{max-width:1000px;margin:0 auto;padding:40px 20px;position:relative;z-index:1}
 a{color:#e0a458;text-decoration:none}
 header{text-align:center;padding:60px 20px 30px}
@@ -15,8 +14,7 @@ header h1{font-size:2.8em;color:#fff}
 nav{margin-top:25px}
 nav a{margin:0 12px;text-transform:uppercase;transition:color .3s}
 nav a:hover{color:#fff}
-section{padding:50px 20px;opacity:0;transform:translateY(30px);transition:opacity .6s,transform .6s}
-section.visible{opacity:1;transform:translateY(0)}
+section{padding:50px 20px}
 h2{font-size:1.8em;color:#fff}
 h2::after{content:'';display:block;width:40px;height:2px;background:#e0a458;margin-top:8px}
 .about p{line-height:1.7;color:#aaa}
@@ -24,8 +22,8 @@ h2::after{content:'';display:block;width:40px;height:2px;background:#e0a458;marg
 .about ul li{padding:5px 0;color:#bbb}
 .about ul li::before{content:'✅ ';color:#e0a458}
 .video-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
-.video-item{background:#12121a;border-radius:8px;overflow:hidden;border:1px solid #1e1e2e;transition:transform .3s,border-color .3s,box-shadow .3s}
-.video-item:hover{transform:translateY(-3px);border-color:#e0a458;box-shadow:0 10px 30px rgba(224,164,88,.2)}
+.video-item{background:#12121a;border-radius:8px;overflow:hidden;border:1px solid #1e1e2e;transition:transform .3s}
+.video-item:hover{transform:translateY(-3px);border-color:#e0a458}
 .video-item video{width:100%;display:block;background:#000}
 .video-item .label{padding:10px 12px;font-size:.85em;color:#aaa}
 @media(max-width:768px){.video-grid{grid-template-columns:1fr}}
@@ -40,18 +38,9 @@ h2::after{content:'';display:block;width:40px;height:2px;background:#e0a458;marg
 .back-top{position:fixed;bottom:30px;right:30px;background:#e0a458;color:#0a0a0f;border:none;width:45px;height:45px;border-radius:50%;cursor:pointer;font-size:1.5em;opacity:0;transition:opacity .3s;z-index:99}
 .back-top.show{opacity:1}
 footer{text-align:center;padding:25px;color:#555}
-.timeline{position:fixed;bottom:0;left:0;width:100%;height:3px;z-index:2;pointer-events:none}
-.timeline div{height:100%;float:left}
-.tl1{width:25%;background:#4a90d9}
-.tl2{width:15%;background:#7ac043}
-.tl3{width:30%;background:#e0a458}
-.tl4{width:10%;background:#c0392b}
-.tl5{width:20%;background:#8e44ad}
 </style>
 </head>
 <body>
-<canvas id="bg"></canvas>
-<div class="timeline"><div class="tl1"></div><div class="tl2"></div><div class="tl3"></div><div class="tl4"></div><div class="tl5"></div></div>
 <div class="container">
 <header>
 <h1>Mukhin Yuri</h1>
@@ -93,21 +82,6 @@ footer{text-align:center;padding:25px;color:#555}
 <button class="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
 <footer>© 2026 Mukhin Yuri</footer>
 <script>
-const canvasBg=document.getElementById('bg'),ctxBg=canvasBg.getContext('2d')
-let w,h,particles=[]
-function resize(){w=canvasBg.width=window.innerWidth;h=canvasBg.height=window.innerHeight}
-resize();window.addEventListener('resize',resize)
-for(let i=0;i<80;i++)particles.push({x:Math.random()*w,y:Math.random()*h,vx:(Math.random()-.5)*.5,vy:(Math.random()-.5)*.5,r:Math.random()*2+1,a:Math.random()*.5+.1})
-function drawBg(){
-ctxBg.clearRect(0,0,w,h)
-ctxBg.strokeStyle='rgba(255,255,255,.03)';ctxBg.lineWidth=1
-for(let x=0;x<w;x+=60){ctxBg.beginPath();ctxBg.moveTo(x,0);ctxBg.lineTo(x,h);ctxBg.stroke()}
-for(let y=0;y<h;y+=60){ctxBg.beginPath();ctxBg.moveTo(0,y);ctxBg.lineTo(w,y);ctxBg.stroke()}
-particles.forEach(p=>{p.x+=p.vx;p.y+=p.vy;if(p.x<0||p.x>w)p.vx*=-1;if(p.y<0||p.y>h)p.vy*=-1;ctxBg.beginPath();ctxBg.arc(p.x,p.y,p.r,0,Math.PI*2);ctxBg.fillStyle=`rgba(224,164,88,${p.a})`;ctxBg.fill()})
-particles.forEach((a,i)=>{particles.slice(i+1).forEach(b=>{const d=Math.hypot(a.x-b.x,a.y-b.y);if(d<120){ctxBg.beginPath();ctxBg.moveTo(a.x,a.y);ctxBg.lineTo(b.x,b.y);ctxBg.strokeStyle=`rgba(224,164,88,${.06*(1-d/120)})`;ctxBg.stroke()}})})
-requestAnimationFrame(drawBg)
-}
-drawBg()
 const grid=document.getElementById('grid')
 // OK.ru
 const okItem=document.createElement('div')
@@ -122,7 +96,8 @@ item.className='video-item'
 const video=document.createElement('video')
 video.src=`videos/${i}.mp4`
 video.controls=true
-video.preload='metadata'
+video.preload='none'
+video.setAttribute('playsinline','')
 item.appendChild(video)
 const label=document.createElement('div')
 label.className='label'
@@ -130,8 +105,6 @@ label.textContent=`Работа ${i}`
 item.appendChild(label)
 grid.appendChild(item)
 }
-const observer=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')})},{threshold:.15})
-document.querySelectorAll('section').forEach(s=>observer.observe(s))
 window.addEventListener('scroll',()=>{document.querySelector('.back-top').classList.toggle('show',window.scrollY>500)})
 </script>
 </body>

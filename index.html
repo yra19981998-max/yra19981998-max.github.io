@@ -1,201 +1,180 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html>
+<!DOCTYPE html>
+<html lang="ru">
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <meta http-equiv="Content-Style-Type" content="text/css">
-  <title></title>
-  <meta name="Generator" content="Cocoa HTML Writer">
-  <meta name="CocoaVersion" content="2685.6">
-  <style type="text/css">
-    body {background-color: #0a0a0d}
-    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px 'Helvetica Neue'; color: #c1c1c1; -webkit-text-stroke: #c1c1c1}
-    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px 'Helvetica Neue'; color: #c1c1c1; -webkit-text-stroke: #c1c1c1; min-height: 15.0px}
-    span.s1 {font-kerning: none}
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mukhin Yuri — Видеомонтаж</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;scroll-behavior:smooth}
+body{background:#0a0a0f;color:#ccc;font-family:system-ui,sans-serif;overflow-x:hidden}
+.bg{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none}
+.container{max-width:1000px;margin:0 auto;padding:40px 20px;position:relative;z-index:1}
+a{color:#e0a458;text-decoration:none}
+header{text-align:center;padding:60px 20px 30px}
+header h1{font-size:2.8em;color:#fff}
+nav{margin-top:25px}
+nav a{margin:0 12px;text-transform:uppercase;transition:color .3s}
+nav a:hover{color:#fff}
+section{padding:50px 20px}
+h2{font-size:1.8em;color:#fff}
+h2::after{content:'';display:block;width:40px;height:2px;background:#e0a458;margin-top:8px}
+.about-hero{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start}
+.about-hero .text p{line-height:1.7;color:#aaa;margin-bottom:20px;font-size:1.05em}
+.about-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.stat-card{background:#12121a;border:1px solid #1e1e2e;border-radius:8px;padding:20px;text-align:center;transition:border-color .3s}
+.stat-card:hover{border-color:#e0a458}
+.stat-card .num{font-size:2em;color:#e0a458;font-weight:bold}
+.stat-card .txt{font-size:.85em;color:#888;margin-top:4px}
+.software{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
+.software span{background:#1a1a2e;border:1px solid #333;padding:6px 14px;border-radius:20px;font-size:.85em;color:#e0a458}
+.about-features{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:30px}
+.feature{background:#12121a;border:1px solid #1e1e2e;border-radius:8px;padding:16px;text-align:center;transition:border-color .3s}
+.feature:hover{border-color:#e0a458}
+.feature .icon{font-size:1.8em;margin-bottom:6px}
+.feature .label{font-size:.8em;color:#aaa}
+@media(max-width:768px){.about-hero{grid-template-columns:1fr}.about-stats{grid-template-columns:repeat(3,1fr)}.about-features{grid-template-columns:repeat(2,1fr)}}
+.video-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+.video-item{background:#12121a;border-radius:8px;overflow:hidden;border:1px solid #1e1e2e;transition:transform .3s;position:relative;cursor:pointer;height:260px}
+.video-item:hover{transform:translateY(-3px);border-color:#e0a458}
+.video-item video{width:100%;display:none;background:#000;position:absolute;top:0;left:0;height:100%}
+.video-item .play-btn{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:60px;height:60px;border:2px solid #e0a458;border-radius:50%;background:rgba(0,0,0,.5);z-index:2}
+.video-item .play-btn::after{content:'';display:block;width:0;height:0;border-left:20px solid #e0a458;border-top:12px solid transparent;border-bottom:12px solid transparent;margin:18px 0 0 22px}
+.video-item .num{position:absolute;top:50%;left:50%;transform:translate(-50%,-80px);color:#e0a458;font-size:1em;z-index:2}
+.video-item .label{position:absolute;bottom:0;left:0;right:0;padding:10px 12px;font-size:.85em;color:#aaa}
+@media(max-width:768px){.video-grid{grid-template-columns:1fr}}
+.services-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:16px}
+.service-card{background:#12121a;padding:25px;border-radius:8px;border:1px solid #1e1e2e;transition:transform .3s}
+.service-card:hover{transform:translateY(-5px);border-color:#e0a458}
+.service-card h3{color:#fff}
+.service-card .price{font-size:1.3em;color:#e0a458;margin-top:12px}
+.contacts{text-align:center}
+.contacts a{display:inline-block;padding:10px 28px;border:1px solid #e0a458;border-radius:4px;transition:all .3s}
+.contacts a:hover{background:#e0a458;color:#0a0a0f}
+.back-top{position:fixed;bottom:30px;right:30px;background:#e0a458;color:#0a0a0f;border:none;width:45px;height:45px;border-radius:50%;cursor:pointer;font-size:1.5em;opacity:0;transition:opacity .3s;z-index:99}
+.back-top.show{opacity:1}
+footer{text-align:center;padding:25px;color:#555}
+.timeline{position:fixed;bottom:0;left:0;width:100%;height:3px;z-index:10;pointer-events:none}
+.timeline div{height:100%;float:left}
+.tl1{width:25%;background:#4a90d9}
+.tl2{width:15%;background:#7ac043}
+.tl3{width:30%;background:#e0a458}
+.tl4{width:10%;background:#c0392b}
+.tl5{width:20%;background:#8e44ad}
+</style>
 </head>
 <body>
-<p class="p1"><span class="s1">&lt;!DOCTYPE html&gt;</span></p>
-<p class="p1"><span class="s1">&lt;html lang="ru"&gt;</span></p>
-<p class="p1"><span class="s1">&lt;head&gt;</span></p>
-<p class="p1"><span class="s1">&lt;meta charset="UTF-8"&gt;</span></p>
-<p class="p1"><span class="s1">&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</span></p>
-<p class="p1"><span class="s1">&lt;title&gt;Mukhin Yuri — Видеомонтаж&lt;/title&gt;</span></p>
-<p class="p1"><span class="s1">&lt;style&gt;</span></p>
-<p class="p1"><span class="s1">*{margin:0;padding:0;box-sizing:border-box;scroll-behavior:smooth}</span></p>
-<p class="p1"><span class="s1">body{background:#0a0a0f;color:#ccc;font-family:system-ui,sans-serif;overflow-x:hidden}</span></p>
-<p class="p1"><span class="s1">.bg{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none}</span></p>
-<p class="p1"><span class="s1">.container{max-width:1000px;margin:0 auto;padding:40px 20px;position:relative;z-index:1}</span></p>
-<p class="p1"><span class="s1">a{color:#e0a458;text-decoration:none}</span></p>
-<p class="p1"><span class="s1">header{text-align:center;padding:60px 20px 30px}</span></p>
-<p class="p1"><span class="s1">header h1{font-size:2.8em;color:#fff}</span></p>
-<p class="p1"><span class="s1">nav{margin-top:25px}</span></p>
-<p class="p1"><span class="s1">nav a{margin:0 12px;text-transform:uppercase;transition:color .3s}</span></p>
-<p class="p1"><span class="s1">nav a:hover{color:#fff}</span></p>
-<p class="p1"><span class="s1">section{padding:50px 20px}</span></p>
-<p class="p1"><span class="s1">h2{font-size:1.8em;color:#fff}</span></p>
-<p class="p1"><span class="s1">h2::after{content:'';display:block;width:40px;height:2px;background:#e0a458;margin-top:8px}</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1">/* Обо мне */</span></p>
-<p class="p1"><span class="s1">.about-hero{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start}</span></p>
-<p class="p1"><span class="s1">.about-hero .text p{line-height:1.7;color:#aaa;margin-bottom:20px;font-size:1.05em}</span></p>
-<p class="p1"><span class="s1">.about-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}</span></p>
-<p class="p1"><span class="s1">.stat-card{background:#12121a;border:1px solid #1e1e2e;border-radius:8px;padding:20px;text-align:center;transition:border-color .3s}</span></p>
-<p class="p1"><span class="s1">.stat-card:hover{border-color:#e0a458}</span></p>
-<p class="p1"><span class="s1">.stat-card .num{font-size:2em;color:#e0a458;font-weight:bold}</span></p>
-<p class="p1"><span class="s1">.stat-card .txt{font-size:.85em;color:#888;margin-top:4px}</span></p>
-<p class="p1"><span class="s1">.software{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}</span></p>
-<p class="p1"><span class="s1">.software span{background:#1a1a2e;border:1px solid #333;padding:6px 14px;border-radius:20px;font-size:.85em;color:#e0a458}</span></p>
-<p class="p1"><span class="s1">.about-features{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:30px}</span></p>
-<p class="p1"><span class="s1">.feature{background:#12121a;border:1px solid #1e1e2e;border-radius:8px;padding:16px;text-align:center;transition:border-color .3s}</span></p>
-<p class="p1"><span class="s1">.feature:hover{border-color:#e0a458}</span></p>
-<p class="p1"><span class="s1">.feature .icon{font-size:1.8em;margin-bottom:6px}</span></p>
-<p class="p1"><span class="s1">.feature .label{font-size:.8em;color:#aaa}</span></p>
-<p class="p1"><span class="s1">@media(max-width:768px){.about-hero{grid-template-columns:1fr}.about-stats{grid-template-columns:repeat(3,1fr)}.about-features{grid-template-columns:repeat(2,1fr)}}</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1">.video-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}</span></p>
-<p class="p1"><span class="s1">.video-item{background:#12121a;border-radius:8px;overflow:hidden;border:1px solid #1e1e2e;transition:transform .3s;position:relative;cursor:pointer;height:260px}</span></p>
-<p class="p1"><span class="s1">.video-item:hover{transform:translateY(-3px);border-color:#e0a458}</span></p>
-<p class="p1"><span class="s1">.video-item video{width:100%;display:none;background:#000;position:absolute;top:0;left:0;height:100%}</span></p>
-<p class="p1"><span class="s1">.video-item .play-btn{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:60px;height:60px;border:2px solid #e0a458;border-radius:50%;background:rgba(0,0,0,.5);z-index:2}</span></p>
-<p class="p1"><span class="s1">.video-item .play-btn::after{content:'';display:block;width:0;height:0;border-left:20px solid #e0a458;border-top:12px solid transparent;border-bottom:12px solid transparent;margin:18px 0 0 22px}</span></p>
-<p class="p1"><span class="s1">.video-item .num{position:absolute;top:50%;left:50%;transform:translate(-50%,-80px);color:#e0a458;font-size:1em;z-index:2}</span></p>
-<p class="p1"><span class="s1">.video-item .label{position:absolute;bottom:0;left:0;right:0;padding:10px 12px;font-size:.85em;color:#aaa}</span></p>
-<p class="p1"><span class="s1">@media(max-width:768px){.video-grid{grid-template-columns:1fr}}</span></p>
-<p class="p1"><span class="s1">.services-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:16px}</span></p>
-<p class="p1"><span class="s1">.service-card{background:#12121a;padding:25px;border-radius:8px;border:1px solid #1e1e2e;transition:transform .3s}</span></p>
-<p class="p1"><span class="s1">.service-card:hover{transform:translateY(-5px);border-color:#e0a458}</span></p>
-<p class="p1"><span class="s1">.service-card h3{color:#fff}</span></p>
-<p class="p1"><span class="s1">.service-card .price{font-size:1.3em;color:#e0a458;margin-top:12px}</span></p>
-<p class="p1"><span class="s1">.contacts{text-align:center}</span></p>
-<p class="p1"><span class="s1">.contacts a{display:inline-block;padding:10px 28px;border:1px solid #e0a458;border-radius:4px;transition:all .3s}</span></p>
-<p class="p1"><span class="s1">.contacts a:hover{background:#e0a458;color:#0a0a0f}</span></p>
-<p class="p1"><span class="s1">.back-top{position:fixed;bottom:30px;right:30px;background:#e0a458;color:#0a0a0f;border:none;width:45px;height:45px;border-radius:50%;cursor:pointer;font-size:1.5em;opacity:0;transition:opacity .3s;z-index:99}</span></p>
-<p class="p1"><span class="s1">.back-top.show{opacity:1}</span></p>
-<p class="p1"><span class="s1">footer{text-align:center;padding:25px;color:#555}</span></p>
-<p class="p1"><span class="s1">.timeline{position:fixed;bottom:0;left:0;width:100%;height:3px;z-index:10;pointer-events:none}</span></p>
-<p class="p1"><span class="s1">.timeline div{height:100%;float:left}</span></p>
-<p class="p1"><span class="s1">.tl1{width:25%;background:#4a90d9}</span></p>
-<p class="p1"><span class="s1">.tl2{width:15%;background:#7ac043}</span></p>
-<p class="p1"><span class="s1">.tl3{width:30%;background:#e0a458}</span></p>
-<p class="p1"><span class="s1">.tl4{width:10%;background:#c0392b}</span></p>
-<p class="p1"><span class="s1">.tl5{width:20%;background:#8e44ad}</span></p>
-<p class="p1"><span class="s1">&lt;/style&gt;</span></p>
-<p class="p1"><span class="s1">&lt;/head&gt;</span></p>
-<p class="p1"><span class="s1">&lt;body&gt;</span></p>
-<p class="p1"><span class="s1">&lt;canvas class="bg" id="bg"&gt;&lt;/canvas&gt;</span></p>
-<p class="p1"><span class="s1">&lt;div class="timeline"&gt;&lt;div class="tl1"&gt;&lt;/div&gt;&lt;div class="tl2"&gt;&lt;/div&gt;&lt;div class="tl3"&gt;&lt;/div&gt;&lt;div class="tl4"&gt;&lt;/div&gt;&lt;div class="tl5"&gt;&lt;/div&gt;&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1">&lt;div class="container"&gt;</span></p>
-<p class="p1"><span class="s1">&lt;header&gt;</span></p>
-<p class="p1"><span class="s1">&lt;h1&gt;Mukhin Yuri&lt;/h1&gt;</span></p>
-<p class="p1"><span class="s1">&lt;p style="color:#888"&gt;Видеомонтаж • Reels • YouTube&lt;/p&gt;</span></p>
-<p class="p1"><span class="s1">&lt;nav&gt;</span></p>
-<p class="p1"><span class="s1">&lt;a href="#about"&gt;Обо мне&lt;/a&gt;</span></p>
-<p class="p1"><span class="s1">&lt;a href="#portfolio"&gt;Портфолио&lt;/a&gt;</span></p>
-<p class="p1"><span class="s1">&lt;a href="#services"&gt;Услуги&lt;/a&gt;</span></p>
-<p class="p1"><span class="s1">&lt;a href="#contacts"&gt;Контакты&lt;/a&gt;</span></p>
-<p class="p1"><span class="s1">&lt;/nav&gt;</span></p>
-<p class="p1"><span class="s1">&lt;/header&gt;</span></p>
-<p class="p1"><span class="s1">&lt;section id="about"&gt;</span></p>
-<p class="p1"><span class="s1">&lt;h2&gt;Обо мне&lt;/h2&gt;</span></p>
-<p class="p1"><span class="s1">&lt;div class="about-hero"&gt;</span></p>
-<p class="p1"><span class="s1">&lt;div class="text"&gt;</span></p>
-<p class="p1"><span class="s1">&lt;p&gt;Создаю ролики, которые цепляют с первой секунды и не отпускают до финального кадра.&lt;/p&gt;</span></p>
-<p class="p1"><span class="s1">&lt;p&gt;Мой инструмент — &lt;strong style="color:#e0a458"&gt;DaVinci Resolve&lt;/strong&gt;. В кадре всё имеет значение: ритм, цвет, звук. Я не просто склеиваю видео, а делаю продукт, который решает вашу задачу: продаёт, обучает или развлекает.&lt;/p&gt;</span></p>
-<p class="p1"><span class="s1">&lt;p&gt;Работал с бизнесом и музыкальными проектами. Делал Reels, которые набирали 100 000+ просмотров, и коммерческие ролики, которые приносили клиентов.&lt;/p&gt;</span></p>
-<p class="p1"><span class="s1">&lt;div class="software"&gt;</span></p>
-<p class="p1"><span class="s1">&lt;span&gt;DaVinci Resolve&lt;/span&gt;</span></p>
-<p class="p1"><span class="s1">&lt;span&gt;Цветокоррекция&lt;/span&gt;</span></p>
-<p class="p1"><span class="s1">&lt;span&gt;Саунд-дизайн&lt;/span&gt;</span></p>
-<p class="p1"><span class="s1">&lt;span&gt;Reels&lt;/span&gt;</span></p>
-<p class="p1"><span class="s1">&lt;span&gt;YouTube&lt;/span&gt;</span></p>
-<p class="p1"><span class="s1">&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1">&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1">&lt;div class="about-stats"&gt;</span></p>
-<p class="p1"><span class="s1">&lt;div class="stat-card"&gt;&lt;div class="num"&gt;50+&lt;/div&gt;&lt;div class="txt"&gt;проектов&lt;/div&gt;&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1">&lt;div class="stat-card"&gt;&lt;div class="num"&gt;2 года&lt;/div&gt;&lt;div class="txt"&gt;опыта&lt;/div&gt;&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1">&lt;div class="stat-card"&gt;&lt;div class="num"&gt;100%&lt;/div&gt;&lt;div class="txt"&gt;довольных&lt;/div&gt;&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1">&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1">&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1">&lt;div class="about-features"&gt;</span></p>
-<p class="p1"><span class="s1">&lt;div class="feature"&gt;&lt;div class="icon"&gt;🎬&lt;/div&gt;&lt;div class="label"&gt;Динамичный монтаж&lt;/div&gt;&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1">&lt;div class="feature"&gt;&lt;div class="icon"&gt;🎨&lt;/div&gt;&lt;div class="label"&gt;Цветокоррекция&lt;/div&gt;&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1">&lt;div class="feature"&gt;&lt;div class="icon"&gt;🔊&lt;/div&gt;&lt;div class="label"&gt;Чистый звук&lt;/div&gt;&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1">&lt;div class="feature"&gt;&lt;div class="icon"&gt;📱&lt;/div&gt;&lt;div class="label"&gt;Все форматы&lt;/div&gt;&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1">&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1">&lt;/section&gt;</span></p>
-<p class="p1"><span class="s1">&lt;section id="portfolio"&gt;</span></p>
-<p class="p1"><span class="s1">&lt;h2&gt;Портфолио&lt;/h2&gt;</span></p>
-<p class="p1"><span class="s1">&lt;div class="video-grid" id="grid"&gt;&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1">&lt;/section&gt;</span></p>
-<p class="p1"><span class="s1">&lt;section id="services"&gt;</span></p>
-<p class="p1"><span class="s1">&lt;h2&gt;Услуги и цены&lt;/h2&gt;</span></p>
-<p class="p1"><span class="s1">&lt;div class="services-grid"&gt;</span></p>
-<p class="p1"><span class="s1">&lt;div class="service-card"&gt;&lt;h3&gt;Reels / Shorts&lt;/h3&gt;&lt;p&gt;Монтаж коротких видео до 1 минуты&lt;/p&gt;&lt;p class="price"&gt;от 300 ₽ / видео&lt;/p&gt;&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1">&lt;div class="service-card"&gt;&lt;h3&gt;YouTube видео&lt;/h3&gt;&lt;p&gt;Полный монтаж роликов с эффектами&lt;/p&gt;&lt;p class="price"&gt;от 300 ₽ / минута&lt;/p&gt;&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1">&lt;div class="service-card"&gt;&lt;h3&gt;Коммерческий монтаж&lt;/h3&gt;&lt;p&gt;Реклама, промо, презентации&lt;/p&gt;&lt;p class="price"&gt;от 300 ₽ / минута&lt;/p&gt;&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1">&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1">&lt;/section&gt;</span></p>
-<p class="p1"><span class="s1">&lt;section id="contacts" class="contacts"&gt;</span></p>
-<p class="p1"><span class="s1">&lt;h2&gt;Контакты&lt;/h2&gt;</span></p>
-<p class="p1"><span class="s1">&lt;a href="https://t.me/HR_207"&gt;Написать в Telegram&lt;/a&gt;</span></p>
-<p class="p1"><span class="s1">&lt;/section&gt;</span></p>
-<p class="p1"><span class="s1">&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1">&lt;button class="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})"&gt;↑&lt;/button&gt;</span></p>
-<p class="p1"><span class="s1">&lt;footer&gt;© 2026 Mukhin Yuri&lt;/footer&gt;</span></p>
-<p class="p1"><span class="s1">&lt;script&gt;</span></p>
-<p class="p1"><span class="s1">const canvas=document.getElementById('bg'),ctx=canvas.getContext('2d')</span></p>
-<p class="p1"><span class="s1">let w,h,particles=[]</span></p>
-<p class="p1"><span class="s1">function resize(){w=canvas.width=window.innerWidth;h=canvas.height=window.innerHeight}</span></p>
-<p class="p1"><span class="s1">resize();window.addEventListener('resize',resize)</span></p>
-<p class="p1"><span class="s1">for(let i=0;i&lt;80;i++)particles.push({x:Math.random()*w,y:Math.random()*h,vx:(Math.random()-.5)*.5,vy:(Math.random()-.5)*.5,r:Math.random()*2+1,a:Math.random()*.5+.1})</span></p>
-<p class="p1"><span class="s1">function draw(){</span></p>
-<p class="p1"><span class="s1">ctx.clearRect(0,0,w,h)</span></p>
-<p class="p1"><span class="s1">ctx.strokeStyle='rgba(255,255,255,.03)';ctx.lineWidth=1</span></p>
-<p class="p1"><span class="s1">for(let x=0;x&lt;w;x+=60){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,h);ctx.stroke()}</span></p>
-<p class="p1"><span class="s1">for(let y=0;y&lt;h;y+=60){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(w,y);ctx.stroke()}</span></p>
-<p class="p1"><span class="s1">particles.forEach(p=&gt;{p.x+=p.vx;p.y+=p.vy;if(p.x&lt;0||p.x&gt;w)p.vx*=-1;if(p.y&lt;0||p.y&gt;h)p.vy*=-1;ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fillStyle=`rgba(224,164,88,${p.a})`;ctx.fill()})</span></p>
-<p class="p1"><span class="s1">particles.forEach((a,i)=&gt;{particles.slice(i+1).forEach(b=&gt;{const d=Math.hypot(a.x-b.x,a.y-b.y);if(d&lt;120){ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.strokeStyle=`rgba(224,164,88,${.06*(1-d/120)})`;ctx.stroke()}})})</span></p>
-<p class="p1"><span class="s1">requestAnimationFrame(draw)</span></p>
-<p class="p1"><span class="s1">}</span></p>
-<p class="p1"><span class="s1">draw()</span></p>
-<p class="p1"><span class="s1">const grid=document.getElementById('grid')</span></p>
-<p class="p1"><span class="s1">const okItem=document.createElement('div')</span></p>
-<p class="p1"><span class="s1">okItem.className='video-item'</span></p>
-<p class="p1"><span class="s1">okItem.innerHTML=`&lt;iframe src="https://ok.ru/videoembed/15482538691223" allowfullscreen style="width:100%;height:100%;border:none;position:absolute;top:0;left:0"&gt;&lt;/iframe&gt;&lt;div class="label"&gt;Работа 8&lt;/div&gt;`</span></p>
-<p class="p1"><span class="s1">grid.appendChild(okItem)</span></p>
-<p class="p1"><span class="s1">for(let i=1;i&lt;=18;i++){</span></p>
-<p class="p1"><span class="s1">if(i===8)continue</span></p>
-<p class="p1"><span class="s1">const item=document.createElement('div')</span></p>
-<p class="p1"><span class="s1">item.className='video-item'</span></p>
-<p class="p1"><span class="s1">const num=document.createElement('div')</span></p>
-<p class="p1"><span class="s1">num.className='num'</span></p>
-<p class="p1"><span class="s1">num.textContent=i</span></p>
-<p class="p1"><span class="s1">const btn=document.createElement('div')</span></p>
-<p class="p1"><span class="s1">btn.className='play-btn'</span></p>
-<p class="p1"><span class="s1">const video=document.createElement('video')</span></p>
-<p class="p1"><span class="s1">video.src=`videos/${i}.mp4`</span></p>
-<p class="p1"><span class="s1">video.controls=true</span></p>
-<p class="p1"><span class="s1">video.preload='none'</span></p>
-<p class="p1"><span class="s1">video.playsInline=true</span></p>
-<p class="p1"><span class="s1">video.style.cssText='position:absolute;top:0;left:0;width:100%;height:100%'</span></p>
-<p class="p1"><span class="s1">const label=document.createElement('div')</span></p>
-<p class="p1"><span class="s1">label.className='label'</span></p>
-<p class="p1"><span class="s1">label.textContent=`Работа ${i}`</span></p>
-<p class="p1"><span class="s1">item.appendChild(num)</span></p>
-<p class="p1"><span class="s1">item.appendChild(btn)</span></p>
-<p class="p1"><span class="s1">item.appendChild(video)</span></p>
-<p class="p1"><span class="s1">item.appendChild(label)</span></p>
-<p class="p1"><span class="s1">item.addEventListener('click',function(){</span></p>
-<p class="p1"><span class="s1">video.style.display='block'</span></p>
-<p class="p1"><span class="s1">video.play()</span></p>
-<p class="p1"><span class="s1">num.style.display='none'</span></p>
-<p class="p1"><span class="s1">btn.style.display='none'</span></p>
-<p class="p1"><span class="s1">})</span></p>
-<p class="p1"><span class="s1">grid.appendChild(item)</span></p>
-<p class="p1"><span class="s1">}</span></p>
-<p class="p1"><span class="s1">window.addEventListener('scroll',()=&gt;{document.querySelector('.back-top').classList.toggle('show',window.scrollY&gt;500)})</span></p>
-<p class="p1"><span class="s1">&lt;/script&gt;</span></p>
-<p class="p1"><span class="s1">&lt;/body&gt;</span></p>
-<p class="p1"><span class="s1">&lt;/html&gt;</span></p>
+<canvas class="bg" id="bg"></canvas>
+<div class="timeline"><div class="tl1"></div><div class="tl2"></div><div class="tl3"></div><div class="tl4"></div><div class="tl5"></div></div>
+<div class="container">
+<header>
+<h1>Mukhin Yuri</h1>
+<p style="color:#888">Видеомонтаж • Reels • YouTube</p>
+<nav>
+<a href="#about">Обо мне</a>
+<a href="#portfolio">Портфолио</a>
+<a href="#services">Услуги</a>
+<a href="#contacts">Контакты</a>
+</nav>
+</header>
+<section id="about">
+<h2>Обо мне</h2>
+<div class="about-hero">
+<div class="text">
+<p>Создаю ролики, которые цепляют с первой секунды и не отпускают до финального кадра.</p>
+<p>Мой инструмент — <strong style="color:#e0a458">DaVinci Resolve</strong>. В кадре всё имеет значение: ритм, цвет, звук. Я не просто склеиваю видео, а делаю продукт, который решает вашу задачу: продаёт, обучает или развлекает.</p>
+<p>Работал с бизнесом и музыкальными проектами. Делал Reels, которые набирали 100 000+ просмотров, и коммерческие ролики, которые приносили клиентов.</p>
+<div class="software">
+<span>DaVinci Resolve</span>
+<span>Цветокоррекция</span>
+<span>Саунд-дизайн</span>
+<span>Reels</span>
+<span>YouTube</span>
+</div>
+</div>
+<div class="about-stats">
+<div class="stat-card"><div class="num">50+</div><div class="txt">проектов</div></div>
+<div class="stat-card"><div class="num">2 года</div><div class="txt">опыта</div></div>
+<div class="stat-card"><div class="num">100%</div><div class="txt">довольных</div></div>
+</div>
+</div>
+<div class="about-features">
+<div class="feature"><div class="icon">🎬</div><div class="label">Динамичный монтаж</div></div>
+<div class="feature"><div class="icon">🎨</div><div class="label">Цветокоррекция</div></div>
+<div class="feature"><div class="icon">🔊</div><div class="label">Чистый звук</div></div>
+<div class="feature"><div class="icon">📱</div><div class="label">Все форматы</div></div>
+</div>
+</section>
+<section id="portfolio">
+<h2>Портфолио</h2>
+<div class="video-grid" id="grid"></div>
+</section>
+<section id="services">
+<h2>Услуги и цены</h2>
+<div class="services-grid">
+<div class="service-card"><h3>Reels / Shorts</h3><p>Монтаж коротких видео до 1 минуты</p><p class="price">от 300 ₽ / видео</p></div>
+<div class="service-card"><h3>YouTube видео</h3><p>Полный монтаж роликов с эффектами</p><p class="price">от 300 ₽ / минута</p></div>
+<div class="service-card"><h3>Коммерческий монтаж</h3><p>Реклама, промо, презентации</p><p class="price">от 300 ₽ / минута</p></div>
+</div>
+</section>
+<section id="contacts" class="contacts">
+<h2>Контакты</h2>
+<a href="https://t.me/HR_207">Написать в Telegram</a>
+</section>
+</div>
+<button class="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+<footer>© 2026 Mukhin Yuri</footer>
+<script>
+const canvas=document.getElementById('bg'),ctx=canvas.getContext('2d')
+let w,h,particles=[]
+function resize(){w=canvas.width=window.innerWidth;h=canvas.height=window.innerHeight}
+resize();window.addEventListener('resize',resize)
+for(let i=0;i<80;i++)particles.push({x:Math.random()*w,y:Math.random()*h,vx:(Math.random()-.5)*.5,vy:(Math.random()-.5)*.5,r:Math.random()*2+1,a:Math.random()*.5+.1})
+function draw(){
+ctx.clearRect(0,0,w,h)
+ctx.strokeStyle='rgba(255,255,255,.03)';ctx.lineWidth=1
+for(let x=0;x<w;x+=60){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,h);ctx.stroke()}
+for(let y=0;y<h;y+=60){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(w,y);ctx.stroke()}
+particles.forEach(p=>{p.x+=p.vx;p.y+=p.vy;if(p.x<0||p.x>w)p.vx*=-1;if(p.y<0||p.y>h)p.vy*=-1;ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fillStyle=`rgba(224,164,88,${p.a})`;ctx.fill()})
+particles.forEach((a,i)=>{particles.slice(i+1).forEach(b=>{const d=Math.hypot(a.x-b.x,a.y-b.y);if(d<120){ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.strokeStyle=`rgba(224,164,88,${.06*(1-d/120)})`;ctx.stroke()}})})
+requestAnimationFrame(draw)
+}
+draw()
+const grid=document.getElementById('grid')
+const okItem=document.createElement('div')
+okItem.className='video-item'
+okItem.innerHTML=`<iframe src="https://ok.ru/videoembed/15482538691223" allowfullscreen style="width:100%;height:100%;border:none;position:absolute;top:0;left:0"></iframe><div class="label">Работа 8</div>`
+grid.appendChild(okItem)
+for(let i=1;i<=18;i++){
+if(i===8)continue
+const item=document.createElement('div')
+item.className='video-item'
+const num=document.createElement('div')
+num.className='num'
+num.textContent=i
+const btn=document.createElement('div')
+btn.className='play-btn'
+const video=document.createElement('video')
+video.src=`videos/${i}.mp4`
+video.controls=true
+video.preload='none'
+video.playsInline=true
+video.style.cssText='position:absolute;top:0;left:0;width:100%;height:100%'
+const label=document.createElement('div')
+label.className='label'
+label.textContent=`Работа ${i}`
+item.appendChild(num)
+item.appendChild(btn)
+item.appendChild(video)
+item.appendChild(label)
+item.addEventListener('click',function(){
+video.style.display='block'
+video.play()
+num.style.display='none'
+btn.style.display='none'
+})
+grid.appendChild(item)
+}
+window.addEventListener('scroll',()=>{document.querySelector('.back-top').classList.toggle('show',window.scrollY>500)})
+</script>
 </body>
 </html>

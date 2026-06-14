@@ -26,15 +26,18 @@ h2::after{content:'';display:block;width:40px;height:2px;background:#e0a458;marg
 .masonry{columns:3;column-gap:16px}
 .masonry .item{break-inside:avoid;margin-bottom:16px;background:#12121a;border-radius:8px;overflow:hidden;border:1px solid #1e1e2e;transition:transform .3s,border-color .3s,box-shadow .3s}
 .masonry .item:hover{transform:scale(1.02);border-color:#e0a458;box-shadow:0 10px 30px rgba(224,164,88,.2)}
-.masonry .item .thumb{width:100%;display:block;cursor:pointer;position:relative}
+.masonry .item .thumb{width:100%;display:block;cursor:pointer;position:relative;overflow:hidden}
 .masonry .item:nth-child(odd) .thumb{height:200px}
 .masonry .item:nth-child(even) .thumb{height:280px}
 .masonry .item:nth-child(3n) .thumb{height:340px}
 .masonry .item:nth-child(5n+1) .thumb{height:240px}
-.masonry .item .thumb img,.masonry .item .thumb video{width:100%;height:100%;object-fit:cover;position:absolute;top:0;left:0}
-.masonry .item .thumb .play{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:50px;height:50px;background:rgba(0,0,0,.6);border-radius:50%;z-index:2;display:flex;align-items:center;justify-content:center}
+.masonry .item .thumb canvas{width:100%;height:100%;object-fit:cover;position:absolute;top:0;left:0}
+.masonry .item .thumb video{width:100%;height:100%;object-fit:cover;position:absolute;top:0;left:0;display:none}
+.masonry .item .thumb.playing video{display:block}
+.masonry .item .thumb.playing canvas{display:none}
+.masonry .item .thumb .play{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:50px;height:50px;background:rgba(0,0,0,.6);border-radius:50%;z-index:2;display:flex;align-items:center;justify-content:center;transition:opacity .3s}
+.masonry .item .thumb.playing .play{opacity:0}
 .masonry .item .thumb .play::after{content:'';border-left:18px solid #e0a458;border-top:10px solid transparent;border-bottom:10px solid transparent;margin-left:4px}
-.masonry .item .thumb.playing .play,.masonry .item .thumb.playing img{display:none}
 .masonry .item .title{padding:10px;font-size:.85em;color:#aaa}
 @media(max-width:768px){.masonry{columns:2}}
 .services-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:16px}
@@ -101,40 +104,60 @@ footer{text-align:center;padding:25px;color:#555}
 <button class="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
 <footer>© 2026 Mukhin Yuri</footer>
 <script>
-const canvas=document.getElementById('bg'),ctx=canvas.getContext('2d')
+const canvasBg=document.getElementById('bg'),ctxBg=canvasBg.getContext('2d')
 let w,h,particles=[]
-function resize(){w=canvas.width=window.innerWidth;h=canvas.height=window.innerHeight}
+function resize(){w=canvasBg.width=window.innerWidth;h=canvasBg.height=window.innerHeight}
 resize();window.addEventListener('resize',resize)
 for(let i=0;i<80;i++)particles.push({x:Math.random()*w,y:Math.random()*h,vx:(Math.random()-.5)*.5,vy:(Math.random()-.5)*.5,r:Math.random()*2+1,a:Math.random()*.5+.1})
 function drawBg(){
-ctx.clearRect(0,0,w,h)
-ctx.strokeStyle='rgba(255,255,255,.03)';ctx.lineWidth=1
-for(let x=0;x<w;x+=60){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,h);ctx.stroke()}
-for(let y=0;y<h;y+=60){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(w,y);ctx.stroke()}
-particles.forEach(p=>{p.x+=p.vx;p.y+=p.vy;if(p.x<0||p.x>w)p.vx*=-1;if(p.y<0||p.y>h)p.vy*=-1;ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fillStyle=`rgba(224,164,88,${p.a})`;ctx.fill()})
-particles.forEach((a,i)=>{particles.slice(i+1).forEach(b=>{const d=Math.hypot(a.x-b.x,a.y-b.y);if(d<120){ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.strokeStyle=`rgba(224,164,88,${.06*(1-d/120)})`;ctx.stroke()}})})
+ctxBg.clearRect(0,0,w,h)
+ctxBg.strokeStyle='rgba(255,255,255,.03)';ctxBg.lineWidth=1
+for(let x=0;x<w;x+=60){ctxBg.beginPath();ctxBg.moveTo(x,0);ctxBg.lineTo(x,h);ctxBg.stroke()}
+for(let y=0;y<h;y+=60){ctxBg.beginPath();ctxBg.moveTo(0,y);ctxBg.lineTo(w,y);ctxBg.stroke()}
+particles.forEach(p=>{p.x+=p.vx;p.y+=p.vy;if(p.x<0||p.x>w)p.vx*=-1;if(p.y<0||p.y>h)p.vy*=-1;ctxBg.beginPath();ctxBg.arc(p.x,p.y,p.r,0,Math.PI*2);ctxBg.fillStyle=`rgba(224,164,88,${p.a})`;ctxBg.fill()})
+particles.forEach((a,i)=>{particles.slice(i+1).forEach(b=>{const d=Math.hypot(a.x-b.x,a.y-b.y);if(d<120){ctxBg.beginPath();ctxBg.moveTo(a.x,a.y);ctxBg.lineTo(b.x,b.y);ctxBg.strokeStyle=`rgba(224,164,88,${.06*(1-d/120)})`;ctxBg.stroke()}})})
 requestAnimationFrame(drawBg)
 }
 drawBg()
+
 const masonry=document.getElementById('masonry')
 // OK.ru видео
 const okItem=document.createElement('div')
 okItem.className='item'
 okItem.innerHTML=`<iframe src="https://ok.ru/videoembed/15482538691223" allowfullscreen></iframe><div class="title">Работа 8</div>`
 masonry.appendChild(okItem)
-// Локальные видео с превью + кнопкой Play
+// Локальные видео — превью через canvas + кнопка Play
 for(let i=1;i<=17;i++){
 if(i===8)continue
 const item=document.createElement('div')
 item.className='item'
+const id='vid'+i
 item.innerHTML=`
-<div class="thumb" onclick="this.classList.add('playing');this.querySelector('video').play()">
-<img src="videos/${i}.mp4#t=0.5" onerror="this.style.display='none'" style="background:#1a1a1a">
-<video src="videos/${i}.mp4" controls preload="metadata" loop></video>
+<div class="thumb" id="${id}">
+<canvas></canvas>
+<video src="videos/${i}.mp4" preload="metadata" muted></video>
 <div class="play"></div>
 </div>
 <div class="title">Работа ${i}</div>`
 masonry.appendChild(item)
+// Генерация превью из видео
+const thumb=document.getElementById(id)
+const video=thumb.querySelector('video')
+const canvas=thumb.querySelector('canvas')
+video.addEventListener('loadeddata',()=>{
+video.currentTime=0.5
+})
+video.addEventListener('seeked',()=>{
+canvas.width=video.videoWidth
+canvas.height=video.videoHeight
+canvas.getContext('2d').drawImage(video,0,0)
+})
+thumb.addEventListener('click',()=>{
+thumb.classList.add('playing')
+video.muted=false
+video.controls=true
+video.play()
+})
 }
 const observer=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')})},{threshold:.15})
 document.querySelectorAll('section').forEach(s=>observer.observe(s))

@@ -114,10 +114,10 @@ requestAnimationFrame(drawBg)
 drawBg()
 const videos=['9-QWem37oQ8','876hNQ62_dU','KXeYe4MZSx0','lbhyxBpc6CY','qpg3Lcq1iOU','EyUcxrPcS6c','ZqYO02nAi1E','zp3tQoAy_3U','SPycRDRG6x0','LOvaWDpWiGE','Fsqx_qNLc3w','G-ZumvWh_Oc','GRG3oWatdeo','9K35moNFEug','_QiQzDj8CPg','Qfsgk1wH_jA','EExeZeWYqZE','uqFueQnfbmg']
 const masonry=document.getElementById('masonry')
-// Местное видео
+// Видео с Google Диска
 const localItem=document.createElement('div')
 localItem.className='item'
-localItem.innerHTML=`<video src="videos/reels EWA.mp4" controls preload="metadata"></video><div class="title">Работа 8</div>`
+localItem.innerHTML=`<video src="https://drive.google.com/uc?export=download&id=1KzqIKPfV6IF_ZZRyBQRNoESqMhkzljb_" controls preload="metadata"></video><div class="title">Работа 8</div>`
 masonry.appendChild(localItem)
 // YouTube видео
 videos.forEach((id,i)=>{

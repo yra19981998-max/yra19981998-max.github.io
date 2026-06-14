@@ -26,7 +26,7 @@ h2::after{content:'';display:block;width:40px;height:2px;background:#e0a458;marg
 .masonry{columns:3;column-gap:16px}
 .masonry .item{break-inside:avoid;margin-bottom:16px;background:#12121a;border-radius:8px;overflow:hidden;border:1px solid #1e1e2e;transition:transform .3s,border-color .3s,box-shadow .3s}
 .masonry .item:hover{transform:scale(1.02);border-color:#e0a458;box-shadow:0 10px 30px rgba(224,164,88,.2)}
-.masonry .item video,.masonry .item iframe{width:100%;display:block;border:none}
+.masonry .item video,.masonry .item iframe{width:100%;display:block;border:none;object-fit:cover}
 .masonry .item:nth-child(odd) video,.masonry .item:nth-child(odd) iframe{height:200px}
 .masonry .item:nth-child(even) video,.masonry .item:nth-child(even) iframe{height:280px}
 .masonry .item:nth-child(3n) video,.masonry .item:nth-child(3n) iframe{height:340px}
@@ -113,17 +113,17 @@ requestAnimationFrame(drawBg)
 }
 drawBg()
 const masonry=document.getElementById('masonry')
-// 18 видео с OK.ru (работа 8)
+// OK.ru видео
 const okItem=document.createElement('div')
 okItem.className='item'
 okItem.innerHTML=`<iframe src="https://ok.ru/videoembed/15482538691223" allowfullscreen></iframe><div class="title">Работа 8</div>`
 masonry.appendChild(okItem)
-// Остальные 17 из папки videos/
+// Локальные видео с превью
 for(let i=1;i<=17;i++){
-if(i===8)continue // 8-е уже из OK
+if(i===8)continue
 const item=document.createElement('div')
 item.className='item'
-item.innerHTML=`<video src="videos/${i}.mp4" controls preload="metadata"></video><div class="title">Работа ${i}</div>`
+item.innerHTML=`<video src="videos/${i}.mp4" controls preload="auto" poster="videos/${i}.mp4#t=0.5"></video><div class="title">Работа ${i}</div>`
 masonry.appendChild(item)
 }
 const observer=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')})},{threshold:.15})

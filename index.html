@@ -88,11 +88,10 @@ footer{text-align:center;padding:25px;color:#555}
 <div class="video-card" data-cat="shorts"><iframe src="https://www.youtube.com/embed/G-ZumvWh_Oc" allowfullscreen></iframe><div class="title">Работа 13</div></div>
 <div class="video-card" data-cat="shorts"><iframe src="https://www.youtube.com/embed/GRG3oWatdeo" allowfullscreen></iframe><div class="title">Работа 14</div></div>
 <div class="video-card" data-cat="shorts"><iframe src="https://www.youtube.com/embed/9K35moNFEug" allowfullscreen></iframe><div class="title">Работа 15</div></div>
-<div class="video-card" data-cat="shorts"><iframe src="https://www.youtube.com/embed/qkRKW8A7NH8" allowfullscreen></iframe><div class="title">Работа 16</div></div>
-<div class="video-card" data-cat="shorts"><iframe src="https://www.youtube.com/embed/_QiQzDj8CPg" allowfullscreen></iframe><div class="title">Работа 17</div></div>
-<div class="video-card" data-cat="shorts"><iframe src="https://www.youtube.com/embed/Qfsgk1wH_jA" allowfullscreen></iframe><div class="title">Работа 18</div></div>
-<div class="video-card" data-cat="shorts"><iframe src="https://www.youtube.com/embed/EExeZeWYqZE" allowfullscreen></iframe><div class="title">Работа 19</div></div>
-<div class="video-card" data-cat="shorts"><iframe src="https://www.youtube.com/embed/uqFueQnfbmg" allowfullscreen></iframe><div class="title">Работа 20</div></div>
+<div class="video-card" data-cat="shorts"><iframe src="https://www.youtube.com/embed/_QiQzDj8CPg" allowfullscreen></iframe><div class="title">Работа 16</div></div>
+<div class="video-card" data-cat="shorts"><iframe src="https://www.youtube.com/embed/Qfsgk1wH_jA" allowfullscreen></iframe><div class="title">Работа 17</div></div>
+<div class="video-card" data-cat="shorts"><iframe src="https://www.youtube.com/embed/EExeZeWYqZE" allowfullscreen></iframe><div class="title">Работа 18</div></div>
+<div class="video-card" data-cat="shorts"><iframe src="https://www.youtube.com/embed/uqFueQnfbmg" allowfullscreen></iframe><div class="title">Работа 19</div></div>
 </div>
 </section>
 <section id="services">
@@ -111,18 +110,13 @@ footer{text-align:center;padding:25px;color:#555}
 <button class="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
 <footer>© 2026 Mukhin Yuri</footer>
 <script>
-// Плавное появление секций
 const observer = new IntersectionObserver((entries) => {
 entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible') })
 }, {threshold:0.15})
 document.querySelectorAll('section').forEach(s => observer.observe(s))
-
-// Кнопка наверх
 window.addEventListener('scroll', () => {
 document.querySelector('.back-top').classList.toggle('show', window.scrollY > 500)
 })
-
-// Фильтр видео
 function filter(cat) {
 document.querySelectorAll('.filter button').forEach(b => b.classList.remove('active'))
 event.target.classList.add('active')

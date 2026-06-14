@@ -5,32 +5,41 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Mukhin Yuri — Видеомонтаж</title>
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
+*{margin:0;padding:0;box-sizing:border-box;scroll-behavior:smooth}
 body{background:#0d0d0d;color:#ccc;font-family:system-ui,sans-serif}
 a{color:#e0a458;text-decoration:none}
 .container{max-width:900px;margin:0 auto;padding:40px 20px}
 header{text-align:center;padding:60px 20px 30px}
 header h1{font-size:2.8em;color:#fff}
 nav{margin-top:25px}
-nav a{margin:0 12px;text-transform:uppercase}
-section{padding:50px 20px}
+nav a{margin:0 12px;text-transform:uppercase;transition:color .3s}
+nav a:hover{color:#fff}
+section{padding:50px 20px;opacity:0;transform:translateY(30px);transition:opacity .6s,transform .6s}
+section.visible{opacity:1;transform:translateY(0)}
 h2{font-size:1.8em;color:#fff}
 h2::after{content:'';display:block;width:40px;height:2px;background:#e0a458;margin-top:8px}
 .about p{line-height:1.7;color:#aaa}
 .about ul{list-style:none;margin-top:15px}
 .about ul li{padding:5px 0;color:#bbb}
 .about ul li::before{content:'✅ ';color:#e0a458}
+.filter{margin-bottom:20px;display:flex;gap:10px;flex-wrap:wrap}
+.filter button{background:#1a1a1a;color:#ccc;border:1px solid #333;padding:8px 16px;border-radius:20px;cursor:pointer;transition:all .3s}
+.filter button:hover,.filter button.active{background:#e0a458;color:#0d0d0d;border-color:#e0a458}
 .portfolio-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px}
-.video-card{background:#1a1a1a;border-radius:8px;overflow:hidden}
+.video-card{background:#1a1a1a;border-radius:8px;overflow:hidden;transition:transform .3s,box-shadow .3s}
+.video-card:hover{transform:translateY(-5px);box-shadow:0 10px 30px rgba(0,0,0,.5)}
 .video-card iframe{width:100%;height:180px;display:block;border:none}
 .video-card .title{padding:10px;font-size:.85em}
 .services-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:16px}
-.service-card{background:#1a1a1a;padding:25px;border-radius:8px;border:1px solid #2a2a2a}
+.service-card{background:#1a1a1a;padding:25px;border-radius:8px;border:1px solid #2a2a2a;transition:transform .3s}
+.service-card:hover{transform:translateY(-5px)}
 .service-card h3{color:#fff}
 .service-card .price{font-size:1.3em;color:#e0a458;margin-top:12px}
 .contacts{text-align:center}
-.contacts a{display:inline-block;padding:10px 28px;border:1px solid #e0a458;border-radius:4px}
+.contacts a{display:inline-block;padding:10px 28px;border:1px solid #e0a458;border-radius:4px;transition:background .3s,color .3s}
 .contacts a:hover{background:#e0a458;color:#0d0d0d}
+.back-top{position:fixed;bottom:30px;right:30px;background:#e0a458;color:#0d0d0d;border:none;width:45px;height:45px;border-radius:50%;cursor:pointer;font-size:1.5em;opacity:0;transition:opacity .3s;z-index:99}
+.back-top.show{opacity:1}
 footer{text-align:center;padding:25px;color:#555}
 </style>
 </head>
@@ -58,14 +67,32 @@ footer{text-align:center;padding:25px;color:#555}
 </section>
 <section id="portfolio">
 <h2>Портфолио</h2>
+<div class="filter">
+<button class="active" onclick="filter('all')">Все</button>
+<button onclick="filter('shorts')">Shorts</button>
+<button onclick="filter('video')">Видео</button>
+</div>
 <div class="portfolio-grid">
-<div class="video-card"><iframe src="https://www.youtube.com/embed/9-QWem37oQ8" allowfullscreen></iframe><div class="title">Работа 1</div></div>
-<div class="video-card"><iframe src="https://www.youtube.com/embed/876hNQ62_dU" allowfullscreen></iframe><div class="title">Работа 2</div></div>
-<div class="video-card"><iframe src="https://www.youtube.com/embed/KXeYe4MZSx0" allowfullscreen></iframe><div class="title">Работа 3</div></div>
-<div class="video-card"><iframe src="https://www.youtube.com/embed/lbhyxBpc6CY" allowfullscreen></iframe><div class="title">Работа 4</div></div>
-<div class="video-card"><iframe src="https://www.youtube.com/embed/qpg3Lcq1iOU" allowfullscreen></iframe><div class="title">Работа 5</div></div>
-<div class="video-card"><iframe src="https://www.youtube.com/embed/EyUcxrPcS6c" allowfullscreen></iframe><div class="title">Работа 6</div></div>
-<div class="video-card"><iframe src="https://www.youtube.com/embed/ZqYO02nAi1E" allowfullscreen></iframe><div class="title">Работа 7</div></div>
+<div class="video-card" data-cat="video"><iframe src="https://www.youtube.com/embed/9-QWem37oQ8" allowfullscreen></iframe><div class="title">Работа 1</div></div>
+<div class="video-card" data-cat="video"><iframe src="https://www.youtube.com/embed/876hNQ62_dU" allowfullscreen></iframe><div class="title">Работа 2</div></div>
+<div class="video-card" data-cat="video"><iframe src="https://www.youtube.com/embed/KXeYe4MZSx0" allowfullscreen></iframe><div class="title">Работа 3</div></div>
+<div class="video-card" data-cat="video"><iframe src="https://www.youtube.com/embed/lbhyxBpc6CY" allowfullscreen></iframe><div class="title">Работа 4</div></div>
+<div class="video-card" data-cat="video"><iframe src="https://www.youtube.com/embed/qpg3Lcq1iOU" allowfullscreen></iframe><div class="title">Работа 5</div></div>
+<div class="video-card" data-cat="video"><iframe src="https://www.youtube.com/embed/EyUcxrPcS6c" allowfullscreen></iframe><div class="title">Работа 6</div></div>
+<div class="video-card" data-cat="video"><iframe src="https://www.youtube.com/embed/ZqYO02nAi1E" allowfullscreen></iframe><div class="title">Работа 7</div></div>
+<div class="video-card" data-cat="shorts"><iframe src="https://www.youtube.com/embed/-42RcRx5y0o" allowfullscreen></iframe><div class="title">Работа 8</div></div>
+<div class="video-card" data-cat="video"><iframe src="https://www.youtube.com/embed/zp3tQoAy_3U" allowfullscreen></iframe><div class="title">Работа 9</div></div>
+<div class="video-card" data-cat="shorts"><iframe src="https://www.youtube.com/embed/SPycRDRG6x0" allowfullscreen></iframe><div class="title">Работа 10</div></div>
+<div class="video-card" data-cat="shorts"><iframe src="https://www.youtube.com/embed/LOvaWDpWiGE" allowfullscreen></iframe><div class="title">Работа 11</div></div>
+<div class="video-card" data-cat="shorts"><iframe src="https://www.youtube.com/embed/Fsqx_qNLc3w" allowfullscreen></iframe><div class="title">Работа 12</div></div>
+<div class="video-card" data-cat="shorts"><iframe src="https://www.youtube.com/embed/G-ZumvWh_Oc" allowfullscreen></iframe><div class="title">Работа 13</div></div>
+<div class="video-card" data-cat="shorts"><iframe src="https://www.youtube.com/embed/GRG3oWatdeo" allowfullscreen></iframe><div class="title">Работа 14</div></div>
+<div class="video-card" data-cat="shorts"><iframe src="https://www.youtube.com/embed/9K35moNFEug" allowfullscreen></iframe><div class="title">Работа 15</div></div>
+<div class="video-card" data-cat="shorts"><iframe src="https://www.youtube.com/embed/qkRKW8A7NH8" allowfullscreen></iframe><div class="title">Работа 16</div></div>
+<div class="video-card" data-cat="shorts"><iframe src="https://www.youtube.com/embed/_QiQzDj8CPg" allowfullscreen></iframe><div class="title">Работа 17</div></div>
+<div class="video-card" data-cat="shorts"><iframe src="https://www.youtube.com/embed/Qfsgk1wH_jA" allowfullscreen></iframe><div class="title">Работа 18</div></div>
+<div class="video-card" data-cat="shorts"><iframe src="https://www.youtube.com/embed/EExeZeWYqZE" allowfullscreen></iframe><div class="title">Работа 19</div></div>
+<div class="video-card" data-cat="shorts"><iframe src="https://www.youtube.com/embed/uqFueQnfbmg" allowfullscreen></iframe><div class="title">Работа 20</div></div>
 </div>
 </section>
 <section id="services">
@@ -81,6 +108,28 @@ footer{text-align:center;padding:25px;color:#555}
 <a href="https://t.me/HR_207">Написать в Telegram</a>
 </section>
 </div>
+<button class="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
 <footer>© 2026 Mukhin Yuri</footer>
+<script>
+// Плавное появление секций
+const observer = new IntersectionObserver((entries) => {
+entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible') })
+}, {threshold:0.15})
+document.querySelectorAll('section').forEach(s => observer.observe(s))
+
+// Кнопка наверх
+window.addEventListener('scroll', () => {
+document.querySelector('.back-top').classList.toggle('show', window.scrollY > 500)
+})
+
+// Фильтр видео
+function filter(cat) {
+document.querySelectorAll('.filter button').forEach(b => b.classList.remove('active'))
+event.target.classList.add('active')
+document.querySelectorAll('.video-card').forEach(card => {
+card.style.display = (cat === 'all' || card.dataset.cat === cat) ? 'block' : 'none'
+})
+}
+</script>
 </body>
 </html>

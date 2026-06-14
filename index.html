@@ -29,46 +29,15 @@ h2::after{content:'';display:block;width:40px;height:2px;background:#e0a458;marg
 .about ul li{padding:5px 0;color:#bbb}
 .about ul li::before{content:'✅ ';color:#e0a458}
 
-/* Карусель */
-.carousel{position:relative;height:420px;overflow:hidden;margin:20px 0}
-.carousel-track{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:100%;height:100%}
-.card{
-  position:absolute;
-  width:240px;height:170px;
-  background:#12121a;
-  border-radius:8px;overflow:hidden;
-  border:1px solid #1e1e2e;
-  transition:all .5s cubic-bezier(.4,0,.2,1);
-  cursor:pointer;
-  left:50%;top:50%;
-  transform:translate(-50%,-50%) scale(.85);
-  opacity:.5;filter:brightness(.5);
-}
-.card.active{
-  transform:translate(-50%,-50%) scale(1.1);
-  opacity:1;filter:brightness(1);
-  z-index:10;
-  border-color:#e0a458;
-  box-shadow:0 10px 40px rgba(224,164,88,.3);
-}
-.card iframe{width:100%;height:100%;display:block;border:none;pointer-events:none}
-.card.active iframe{pointer-events:auto}
-.carousel-btn{
-  position:absolute;top:50%;transform:translateY(-50%);
-  background:rgba(18,18,26,.8);color:#e0a458;
-  border:1px solid #e0a458;font-size:1.5em;
-  width:40px;height:40px;border-radius:50%;
-  cursor:pointer;z-index:20;transition:background .3s;
-}
-.carousel-btn:hover{background:#e0a458;color:#0a0a0f}
-.carousel-btn.prev{left:0}
-.carousel-btn.next{right:0}
-.carousel-dots{text-align:center;margin-top:10px}
-.carousel-dots button{
-  width:8px;height:8px;border-radius:50%;border:none;
-  background:#333;margin:0 4px;cursor:pointer;transition:background .3s;
-}
-.carousel-dots button.active{background:#e0a458}
+/* Горизонтальная лента */
+.tape-wrapper{overflow-x:auto;overflow-y:hidden;cursor:grab;scroll-behavior:smooth;-webkit-overflow-scrolling:touch;padding:10px 0}
+.tape-wrapper::-webkit-scrollbar{height:6px}
+.tape-wrapper::-webkit-scrollbar-track{background:#12121a;border-radius:3px}
+.tape-wrapper::-webkit-scrollbar-thumb{background:#e0a458;border-radius:3px}
+.tape{display:flex;gap:16px;padding:0 20px}
+.tape-card{min-width:280px;height:190px;background:#12121a;border-radius:8px;overflow:hidden;border:1px solid #1e1e2e;transition:transform .3s,border-color .3s,box-shadow .3s;flex-shrink:0}
+.tape-card:hover{transform:translateY(-5px);border-color:#e0a458;box-shadow:0 10px 30px rgba(224,164,88,.2)}
+.tape-card iframe{width:100%;height:100%;display:block;border:none}
 
 .services-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:16px}
 .service-card{background:#12121a;padding:25px;border-radius:8px;border:1px solid #1e1e2e;transition:transform .3s}
@@ -116,12 +85,9 @@ footer{text-align:center;padding:25px;color:#555}
 </section>
 <section id="portfolio">
 <h2>Портфолио</h2>
-<div class="carousel">
-<button class="carousel-btn prev" onclick="move(-1)">◂</button>
-<button class="carousel-btn next" onclick="move(1)">▸</button>
-<div class="carousel-track" id="track"></div>
+<div class="tape-wrapper" id="tapeWrap">
+<div class="tape" id="tape"></div>
 </div>
-<div class="carousel-dots" id="dots"></div>
 </section>
 <section id="services">
 <h2>Услуги и цены</h2>
@@ -156,42 +122,28 @@ requestAnimationFrame(drawBg)
 }
 drawBg()
 
-// Видео
+// Лента с видео
 const videos=[
 '9-QWem37oQ8','876hNQ62_dU','KXeYe4MZSx0','lbhyxBpc6CY','qpg3Lcq1iOU',
 'EyUcxrPcS6c','ZqYO02nAi1E','-42RcRx5y0o','zp3tQoAy_3U','SPycRDRG6x0',
 'LOvaWDpWiGE','Fsqx_qNLc3w','G-ZumvWh_Oc','GRG3oWatdeo','9K35moNFEug',
 '_QiQzDj8CPg','Qfsgk1wH_jA','EExeZeWYqZE','uqFueQnfbmg'
 ]
-const track=document.getElementById('track'),dots=document.getElementById('dots')
-let current=0
-function render(){
-track.innerHTML='';dots.innerHTML=''
-videos.forEach((id,i)=>{
+const tape=document.getElementById('tape')
+videos.forEach(id=>{
 const card=document.createElement('div')
-card.className='card'+(i===current?' active':'')
-card.innerHTML=`<iframe src="https://www.youtube.com/embed/${id}" allowfullscreen></iframe>`
-card.onclick=()=>{current=i;render()}
-track.appendChild(card)
-const dot=document.createElement('button')
-dot.className=i===current?'active':''
-dot.onclick=()=>{current=i;render()}
-dots.appendChild(dot)
+card.className='tape-card'
+card.innerHTML=`<iframe src="https://www.youtube.com/embed/${id}" allowfullscreen loading="lazy"></iframe>`
+tape.appendChild(card)
 })
-positionCards()
-}
-function positionCards(){
-const cards=track.querySelectorAll('.card'),total=cards.length
-cards.forEach((c,i)=>{
-let offset=i-current
-if(offset>2&&offset<total-2)offset=offset>0?3:-3
-const x=offset*200,y=Math.abs(offset)*12
-c.style.transform=`translate(calc(-50% + ${x}px), calc(-50% + ${y}px)) scale(${i===current?1.1:.85})`
-c.style.zIndex=total-Math.abs(offset)
-})
-}
-function move(dir){current=(current+dir+videos.length)%videos.length;render()}
-render()
+
+// Drag to scroll
+const wrap=document.getElementById('tapeWrap')
+let isDown=false,startX,scrollLeft
+wrap.addEventListener('mousedown',e=>{isDown=true;wrap.style.cursor='grabbing';startX=e.pageX-wrap.offsetLeft;scrollLeft=wrap.scrollLeft})
+wrap.addEventListener('mouseleave',()=>{isDown=false;wrap.style.cursor='grab'})
+wrap.addEventListener('mouseup',()=>{isDown=false;wrap.style.cursor='grab'})
+wrap.addEventListener('mousemove',e=>{if(!isDown)return;e.preventDefault();const x=e.pageX-wrap.offsetLeft;wrap.scrollLeft=scrollLeft-(x-startX)*2})
 
 // Секции
 const observer=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')})},{threshold:.15})
